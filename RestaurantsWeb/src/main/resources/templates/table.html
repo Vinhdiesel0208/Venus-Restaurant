@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+
+<head
+	th:replace="fragments/partial :: page_head('The Bags Shop', 'none')" />
+<style type="text/css">
+.menu-img {
+	position: relative;
+}
+
+.menu-img .overlay {
+	display: block;
+}
+
+/* Thêm border màu đen với đường viền cong */
+.block-20 {
+	border: 2px solid #000;
+	border-radius: 10px; /* Đường viền cong */
+	position: relative; /* Vị trí tương đối để có thể đặt chữ số bàn */
+}
+
+.col-md-12.tab-wrap {
+	border: 2px solid #000; /* Độ dày và màu sắc của border */
+	border-radius: 10px; /* Đường cong cho border */
+	padding: 10px; /* Khoảng cách bên trong của phần tử */
+}
+
+/* Thêm overlay */
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 0, 0, 0.5); /* Màu đỏ với độ trong suốt */
+	display: none; /* Mặc định ẩn overlay */
+}
+
+.overblue {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 255, 0.5);
+	/* Màu xanh với độ trong suốt */
+	display: none; /* Mặc định ẩn overlay */
+}
+
+/* Hiển thị overlay khi status = 0 */
+.block-20.status-0 .overlay {
+	display: block; /* Hiển thị overlay khi status = 0 */
+}
+/* Hiển thị overlay khi onine = 1 và status == 0 */
+.block-20.status-0 .overblue {
+	display: block; /* Hiển thị overlay khi onine = 1 */
+}
+/* Hiển thị overlay khi onine = 1 và status != 0*/
+.block-20.status-1 .overblue {
+	display: block; /* Hiển thị overlay khi onine = 1 */
+}
+
+.table-number {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: yellow; /* Đổi màu chữ thành vàng để tương phản với nền */
+    font-size: 24px; /* Tăng kích thước chữ để dễ đọc hơn */
+    font-weight: bold; /* Làm đậm chữ để nổi bật hơn */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Thêm viền đen để nổi bật hơn */
+    z-index: 2; /* Đặt chữ số bàn trên cùng */
+}
+
+
+@media ( max-width : 767px) {
+	.col-lg-5.col-md-6 {
+		width: 100%;
+		/* Đảm bảo rằng mỗi hàng chỉ chứa một ô bên trái và một ô bên phải */
+	}
+	.col-md-4.ftco-animate {
+		width: 25%; /* Mỗi hàng chỉ có hai ô */
+		float: left;
+	}
+	.text-center {
+		display: none; /* Ẩn phần này đi khi màn hình nhỏ */
+	}
+}
+</style>
+<body class="stretched">
+
+	<div id="wrapper">
+
+		<div th:replace="fragments/header :: header">&nbsp;</div>
+
+		<section class="hero-wrap hero-wrap-2"
+			style="background-image: url('/assets/images/bg_3.jpg');"
+			data-stellar-background-ratio="0.5">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate text-center mb-4">
+						<h1 class="mb-2 bread">Specialties</h1>
+						<p class="breadcrumbs">
+							<span class="mr-2"><a href="index.html">Home <i
+									class="ion-ios-arrow-forward"></i></a></span> <span>Table<i
+								class="ion-ios-arrow-forward"></i></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="ftco-section">
+			<div class="container">
+				<div class="ftco-search">
+					<div class="row">
+						<div class="col-md-12 nav-link-wrap">
+							<div class="nav nav-pills d-flex text-center" id="v-pills-tab"
+								role="tablist" aria-orientation="vertical">
+								<!-- Thymeleaf loop for categories -->
+								<a th:each="cat, status : ${listCate}"
+									th:id="'v-pills-' + ${cat.categoryName + '-tab'}"
+									class="nav-link ftco-animate" data-toggle="pill"
+									th:href="'#v-pills-' + ${cat.categoryName}" role="tab"
+									aria-controls="'v-pills-' + ${cat.categoryName}"
+									aria-selected="${status.index == 0}"
+									th:text="${cat.categoryName}"
+									th:classappend="${status.index == 0} ? 'active' : ''">Category
+									Name</a>
+							</div>
+						</div>
+						<div class="col-md-12 tab-wrap" style="margin-top: 150px;">
+							<div class="tab-content" id="v-pills-tabContent">
+								<div th:each="cat, status : ${listCate}"
+									th:id="'v-pills-' + ${cat.categoryName}" class="tab-pane fade"
+									role="tabpanel"
+									aria-labelledby="'v-pills-' + ${cat.categoryName + '-tab'}"
+									th:classappend="${status.index == 0} ? 'active show' : ''">
+									<div class="row">
+
+
+										<div class="col-lg-5 col-md-6">
+											<div class="row">
+												<div class="col-md-4 ftco-animate"
+													th:each="table, iterStat : ${listtable}"
+													th:if="${table.category.categoryName == cat.categoryName and iterStat.index % 2 == 0}">
+													<div class="blog-entry">
+														<a th:href="@{'/menu?tableId=' + ${table.id}}"
+															class="block-20"
+															th:class="'block-20 ' + (${table.status} == false ? 'status-0' : 'status-1')"
+															th:style="'background-image: url(\'/assets/images/2301957.png\'); position: relative; background-size: cover; background-position: center; height: 150px;'">
+															<!-- Thêm overlay -->
+															<div th:if="${table.status == false}" class="overlay"></div>
+															<div th:if="${table.online == 1}" class="overblue"></div>
+															<div class="table-number">
+																<h3 th:text="${table.tableNumber}"></h3>
+															</div>
+														</a>
+														<p>
+															<span th:text="${table.seatCount}"></span> seats count
+															<a th:if="${table.online == 1}" th:href="@{'/bookingTableInfo?tableId=' + ${table.id}}">Info</a>
+														</p>
+
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- Lối đi -->
+										<div id="doorway" class="col-lg-2 col-md-1 text-center"
+											style="margin-top: -150px;">
+											<a class="block-20"
+												th:style="'background-image: url(\'/assets/images/anatolir180705418.jpg\'); position: relative; background-size: cover; background-position: center; height: 150px;'">
+											</a>
+										</div>
+
+										<div class="col-lg-5 col-md-6">
+											<div class="row">
+												<div class="col-md-4 ftco-animate"
+													th:each="table, iterStat : ${listtable}"
+													th:if="${table.category.categoryName == cat.categoryName and iterStat.index % 2 != 0}">
+													<div class="blog-entry">
+														<a th:href="@{'/menu?tableId=' + ${table.id}}"
+															class="block-20"
+															th:class="'block-20 ' + (${table.status} == false ? 'status-0' : 'status-1')"
+															th:style="'background-image: url(\'/assets/images/2301957.png\'); position: relative; background-size: cover; background-position: center; height: 150px;'">
+															<div th:if="${table.status == false}" class="overlay"></div>
+															<div th:if="${table.online == 1}" class="overblue"></div>
+															<div class="table-number">
+																<h3 th:text="${table.tableNumber}"></h3>
+															</div>
+														</a>
+														<p>
+															<span th:text="${table.seatCount}"></span> seats count
+															<a th:if="${table.online == 1}" th:href="@{'/bookingTableInfo?tableId=' + ${table.id}}">Info</a>
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script type="text/javascript">
+			document
+					.addEventListener(
+							'DOMContentLoaded',
+							function() {
+								var doorway = document
+										.getElementById('doorway');
+								var categories = document
+										.querySelectorAll('.nav-link');
+
+								doorway
+										.addEventListener(
+												'click',
+												function(event) {
+
+													event.preventDefault();
+
+													var currentCategoryIndex = 0;
+													categories
+															.forEach(function(
+																	category,
+																	index) {
+																if (category.classList
+																		.contains('active')) {
+																	currentCategoryIndex = index;
+																}
+															});
+
+													var nextCategoryIndex = (currentCategoryIndex + 1)
+															% categories.length;
+													var foundValidCategory = false;
+
+													for (var i = nextCategoryIndex; i !== currentCategoryIndex; i = (i + 1)
+															% categories.length) {
+														var nextCategoryId = categories[i]
+																.getAttribute('id');
+
+														if (document
+																.getElementById(nextCategoryId) === null
+																|| nextCategoryId === '#') {
+															continue;
+														} else {
+
+															foundValidCategory = true;
+															categories[i]
+																	.click();
+															break;
+														}
+													}
+
+													if (!foundValidCategory) {
+														categories[0].click();
+													}
+												});
+							});
+		</script>
+
+
+
+		<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+	</div>
+
+	<div id="gotoTop" class="bi-arrow-up"></div>
+
+	<div th:replace="fragments/partial :: page_script"></div>
+
+</body>
+
+</html>
+

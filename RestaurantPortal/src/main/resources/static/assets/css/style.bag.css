@@ -1,0 +1,9 @@
+thead>tr>th.sorting_desc:after {
+  content: "⇊";
+  margin-left: 4px;
+}
+
+thead>tr>th.sorting_asc:after {
+  content: "⇈";
+  margin-left: 4px;
+}

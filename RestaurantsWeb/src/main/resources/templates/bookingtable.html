@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<!--begin::Head-->
+<head
+	th:replace="fragments/partial :: page_head('The Bags Shop', 'none')" />
+<!--end::Head-->
+
+<body class="stretched">
+
+	<!-- Document Wrapper
+	============================================= -->
+	<div id="wrapper">
+
+		<div th:replace="fragments/header :: header">&nbsp;</div>
+
+		<div class="py-1 bg-black top">
+			<div class="container">
+				<div
+					class="row no-gutters d-flex align-items-start align-items-center px-md-0">
+					<div class="col-lg-12 d-block">
+						<div class="row d-flex">
+							<div class="col-md pr-4 d-flex topper align-items-center">
+								<div
+									class="icon mr-2 d-flex justify-content-center align-items-center">
+									<span class="icon-phone2"></span>
+								</div>
+								<span class="text">+ 1235 2355 98</span>
+							</div>
+							<div class="col-md pr-4 d-flex topper align-items-center">
+								<div
+									class="icon mr-2 d-flex justify-content-center align-items-center">
+									<span class="icon-paper-plane"></span>
+								</div>
+								<span class="text">youremail@email.com</span>
+							</div>
+							<div
+								class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right justify-content-end">
+								<p class="mb-0 register-link">
+									<span>Open hours:</span> <span>Monday - Sunday</span> <span>8:00AM
+										- 9:00PM</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- END nav -->
+
+		<section class="hero-wrap hero-wrap-2"
+			style="background-image: url('/assets/images/bg_3.jpg');"
+			data-stellar-background-ratio="0.5">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate text-center mb-4">
+						<h1 class="mb-2 bread">Book a Table</h1>
+						<p class="breadcrumbs">
+							<span class="mr-2"><a href="index.html">Home <i
+									class="ion-ios-arrow-forward"></i></a></span> <span>Reservation <i
+								class="ion-ios-arrow-forward"></i></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container-fluid px-0">
+				<div class="row d-flex no-gutters">
+					<div
+						class="col-md-6 order-md-last ftco-animate makereservation p-4 p-md-5 pt-5">
+						<div class="py-md-5">
+							<div class="heading-section ftco-animate mb-5">
+								<span class="subheading">Book a table</span>
+								<h2 class="mb-4">Make Reservation</h2>
+							</div>
+							<form id="kt_reservation_add" class="form"
+								enctype="multipart/form-data" th:object="${bookingTable}"
+								th:action="@{/booktable/findtable}" method="get">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Name</label> <input type="text"
+												class="form-control" name="name" th:field="*{name}"
+												placeholder="Your Name" required> <span
+												th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+												style="color: red;"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Email</label> <input type="email"
+												class="form-control" name="email" th:field="*{email}"
+												placeholder="Your Email" required> <span
+												th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+												style="color: red;"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Phone</label> <input type="text"
+												class="form-control" name="phone_number"
+												th:field="*{phone_number}" placeholder="Phone"
+												pattern="0\d{9,10}" required> <span
+												th:if="${#fields.hasErrors('phone_number')}"
+												th:errors="*{phone_number}" style="color: red;"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Date</label> <input type="date"
+												class="form-control" name="date" th:field="*{date}" required>
+											<span th:if="${#fields.hasErrors('date')}"
+												th:errors="*{date}" style="color: red;"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Start Time</label> <select
+												th:field="*{start_time}" name="start_time"
+												class="form-control" required>
+												<option value="">Time</option>
+												<option value="09:00">09:00</option>
+												<option value="10:00">10:00</option>
+												<option value="11:00">11:00</option>
+												<option value="12:00">12:00</option>
+												<option value="13:00">13:00</option>
+												<option value="14:00">14:00</option>
+												<option value="15:00">15:00</option>
+												<option value="16:00">16:00</option>
+												<option value="17:00">17:00</option>
+												<option value="18:00">18:00</option>
+												<option value="19:00">19:00</option>
+												<option value="20:00">20:00</option>
+												<option value="21:00">21:00</option>
+											</select> <span th:if="${#fields.hasErrors('start_time')}"
+												th:errors="*{start_time}" style="color: red;"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">End Time</label> <select th:field="*{end_time}"
+												name="end_time" class="form-control" required>
+												<option value="">Time</option>
+												<option value="09:00">09:00</option>
+												<option value="10:00">10:00</option>
+												<option value="11:00">11:00</option>
+												<option value="12:00">12:00</option>
+												<option value="13:00">13:00</option>
+												<option value="14:00">14:00</option>
+												<option value="15:00">15:00</option>
+												<option value="16:00">16:00</option>
+												<option value="17:00">17:00</option>
+												<option value="18:00">18:00</option>
+												<option value="19:00">19:00</option>
+												<option value="20:00">20:00</option>
+												<option value="21:00">21:00</option>
+											</select> <span th:if="${#fields.hasErrors('end_time')}"
+												th:errors="*{end_time}" style="color: red;"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Person Number</label>
+											<div class="select-wrap one-third">
+												<div class="icon">
+													<span class="ion-ios-arrow-down"></span>
+												</div>
+												<select th:field="*{person_number}" name="person_number"
+													class="form-control" required>
+													<option value="">Person</option>
+													<option th:value="2">2</option>
+													<option th:value="3">3</option>
+													<option th:value="4">4</option>
+													<option th:value="5">5</option>
+													<option th:value="6">6</option>
+													<option th:value="8">8</option>
+												</select> <span th:if="${#fields.hasErrors('person_number')}"
+													th:errors="*{person_number}" style="color: red;"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12 mt-3">
+										<div class="form-group">
+											<input type="submit" value="Find Table"
+												class="btn btn-primary py-3 px-5">
+										</div>
+									</div>
+								</div>
+								<div th:if="${message}" class="alert alert-success" role="alert">
+									<span th:text="${message}"></span>
+								</div>
+								<div th:if="${error}" class="alert alert-warning" role="alert">
+									<span th:text="${error}"></span>
+								</div>
+							</form>
+
+						</div>
+					</div>
+					<div class="col-md-6 d-flex align-items-stretch pb-5 pb-md-0">
+						<iframe
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2553156940426!2d106.65267177614527!3d10.79174705890869!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529352c902d55%3A0x84c388af9e3649f5!2zMTA4MiDEkC4gQ8OhY2ggTeG6oW5nIFRow6FuZyA4LCBQaMaw4budbmcgNywgUXXhuq1uIDExLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1713597980553!5m2!1svi!2s"
+							width="600" height="450" style="border: 0;" allowfullscreen=""
+							loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer============================================= -->
+		<div th:replace="fragments/footer :: footer">&nbsp;</div>
+		<!-- #footer end -->
+
+	</div>
+	<!-- #wrapper end -->
+
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="bi-arrow-up"></div>
+
+	<!-- JavaScripts
+	============================================= -->
+	<div th:replace="fragments/partial :: page_script"></div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>[Venus Restaurant]_Notice about table reservations</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f6f6f6;
+}
+
+.container {
+	max-width: 600px;
+	margin: 20px auto;
+	background: #ffffff;
+	padding: 20px;
+}
+
+.header {
+	background-color: #333;
+	color: #ffffff;
+	padding: 10px;
+	text-align: center;
+}
+
+.content {
+	padding: 20px;
+	text-align: left;
+}
+
+.footer {
+	padding: 10px;
+	background-color: #eeeeee;
+	text-align: center;
+	font-size: 12px;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h2>Booking Table Message</h2>
+		</div>
+		<div class="content">
+			<p>
+				Dear <b th:text="${name}"></b>
+			</p>
+			<p>
+				We regret to inform you that: On <b th:text="${date}"></b> at <b
+					th:text="${time}"></b> there are no more available tables. You can
+				order for a different time or a larger number of people if
+				possible.
+			</p>
+			<p>Thank you very much. If you have any questions, please contact
+				us using the information below. Have a nice day.</p>
+			<p>Contact Details:</p>
+			<ul>
+				<li>Email: <a th:href="'mailto:' ">admin@gmail.com</a></li>
+				<li>Phone: <span>006765675</span></li>
+			</ul>
+
+		</div>
+		<div class="footer">
+			&copy; <span th:text="${#dates.year(new java.util.Date())}">2023</span>
+			Venus Restaurant. All rights reserved.
+		</div>
+	</div>
+</body>
+</html>

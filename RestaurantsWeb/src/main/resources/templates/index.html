@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<!--begin::Head-->
+<head
+	th:replace="fragments/partial :: page_head('Venus Restaurant', 'none')" />
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<!-- Slick Slider Theme -->
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+	
+<!-- Slick Slider CSS -->
+<style>
+/* General styles for the results container */
+#menuResults {
+    width: 100%;
+    margin-top: 20px; /* Add some space above the results */
+}
+
+/* Improve the look of the description */
+.menus p {
+    color: #666; /* Lighter color for the description */
+    line-height: 1.5; /* More readable line spacing */
+}
+
+.menu-img:hover {
+	animation: bounce 1s;
+}
+</style>
+
+<!--end::Head-->
+
+<body class="stretched">
+
+	<!-- Document Wrapper
+	============================================= -->
+	<div id="wrapper">
+
+		<div th:replace="fragments/header :: header">&nbsp;</div>
+
+		<section class="home-slider owl-carousel js-fullheight">
+			<div class="slider-item js-fullheight"
+				style='background-image: url(/assets/images/bg_1.jpg);'>
+				<div class="overlay"></div>
+				<div class="container">
+					<div
+						class="row slider-text js-fullheight justify-content-center align-items-center"
+						data-scrollax-parent="true">
+
+						<div class="col-md-12 col-sm-12 text-center ftco-animate">
+							<span class="subheading">Venus Restaurant</span>
+							<h1 class="mb-4">Best Restaurant</h1>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="slider-item js-fullheight"
+				style='background-image: url(/assets/images/bg_2.jpg);'>
+				<div class="overlay"></div>
+				<div class="container">
+					<div
+						class="row slider-text js-fullheight justify-content-center align-items-center"
+						data-scrollax-parent="true">
+
+						<div class="col-md-12 col-sm-12 text-center ftco-animate">
+							<span class="subheading">Venus</span>
+							<h1 class="mb-4">Nutritious &amp; Tasty</h1>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="slider-item js-fullheight"
+				style='background-image: url(/assets/images/bg_3.jpg);'>
+				<div class="overlay"></div>
+				<div class="container">
+					<div
+						class="row slider-text justify-content-center align-items-center"
+						data-scrollax-parent="true">
+
+						<div class="col-md-12 col-sm-12 text-center ftco-animate">
+							<span class="subheading">Venus</span>
+							<h1 class="mb-4">Delicious Specialties</h1>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="featured">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="featured-menus ftco-animate">
+										<div class="menu-img img"
+											style='background-image: url(/assets/images/breakfast-1.jpg);'></div>
+										<div class="text text-center">
+											<h3>Grilled Beef with potatoes</h3>
+											<p>
+												<span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>,
+												<span>Tomatoe</span>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="featured-menus ftco-animate">
+										<div class="menu-img img"
+											style='background-image: url(/assets/images/breakfast-2.jpg);'></div>
+										<div class="text text-center">
+											<h3>Grilled Beef with potatoes</h3>
+											<p>
+												<span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>,
+												<span>Tomatoe</span>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="featured-menus ftco-animate">
+										<div class="menu-img img"
+											style='background-image: url(/assets/images/breakfast-3.jpg);'></div>
+										<div class="text text-center">
+											<h3>Grilled Beef with potatoes</h3>
+											<p>
+												<span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>,
+												<span>Tomatoe</span>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="featured-menus ftco-animate">
+										<div class="menu-img img"
+											style='background-image: url(/assets/images/breakfast-4.jpg);'></div>
+										<div class="text text-center">
+											<h3>Grilled Beef with potatoes</h3>
+											<p>
+												<span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>,
+												<span>Tomatoe</span>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<!-- Content
+		============================================= -->
+		<section class="ftco-section ftco-wrap-about">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7 d-flex">
+						<div class="img img-1 mr-md-2"
+							style='background-image: url(/assets/images/about.jpg);'></div>
+						<div class="img img-2 ml-md-2"
+							style='background-image: url(/assets/images/about-1.jpg);'></div>
+					</div>
+					<div class="col-md-5 wrap-about pt-5 pt-md-5 pb-md-3 ftco-animate">
+						<div class="heading-section mb-4 my-5 my-md-0">
+							<span class="subheading">About</span>
+							<h2 class="mb-4">Venus</h2>
+						</div>
+						<p style="padding-left: 10px; padding-right: 20px;">Welcome to
+							Venus Restaurant, nestled in the heart of Saigon where we
+							specialize in authentic Asian hotpot. Our venue offers a culinary
+							journey through the flavors of Asia with a variety of rich broths
+							and an array of fresh ingredients. Each pot is a simmering blend
+							of spices and seasonings, inviting you to dive into the tradition
+							of sharing and savoring. Situated by the scenic Saigon River,
+							Venus Restaurant provides not just a meal, but an experience
+							where every sip and bite brings comfort and joy.</p>
+						<p class="time">
+							<span>Open Hours: Mon - Sunday <strong>8 AM - 11
+									PM</strong></span> <span>Contact us at <a href="tel:+0909123456">+0909123456</a></span>
+						</p>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+		<!-- Menu Section -->
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row no-gutters justify-content-center mb-5 pb-2">
+					<div class="col-md-12 text-center heading-section ftco-animate">
+						<span class="subheading">Specialties</span>
+						<h2 class="mb-4">Our Menu</h2>
+					</div>
+				</div>
+				<!-- Phần tìm kiếm và dropdown danh mục -->
+				<!-- Add the search button next to the search input -->
+				<div class="row justify-content-center mb-4">
+					<div class="col-md-6">
+						<input type="text" id="menuSearch" class="form-control"
+							placeholder="Search by ingredient name...">
+					</div>
+					<div class="col-md-2">
+						<button id="searchButton" class="btn btn-primary">Search</button>
+					</div>
+
+				</div>
+				<!-- Kết quả tìm kiếm/ lọc sẽ được hiển thị ở đây -->
+				<div id="menuResults" class="row no-gutters d-flex align-items-stretch">
+
+					<div th:each="ing, ingIndex : ${listIng}"
+						class="col-md-12 col-lg-6 d-flex align-self-stretch">
+						<div class="menus d-sm-flex align-items-stretch">
+
+							<div
+								th:if="${(ingIndex.index + 1) % 4 == 1 or (ingIndex.index + 1) % 4 == 2}"
+								class="menu-img img"
+								th:style="'background-image: url(http://localhost:8082/files/' + ${ing.photo} + ');'"></div>
+							<div class="text d-flex align-items-center">
+								<div>
+									<div class="d-flex">
+										<div class="one-half">
+											<h3 th:text="${ing.ingredientName}"></h3>
+										</div>
+										<div class="one-forth">
+											<span class="price" th:text="'$' + ${ing.price}"></span>
+										</div>
+									</div>
+									<p>
+										<span class="price" th:text="${ing.category.categoryName}"></span><span>
+										</span> </span>
+									</p>
+
+								</div>
+							</div>
+
+							<div
+								th:if="${(ingIndex.index + 1) % 4 == 3 or (ingIndex.index + 1) % 4 == 0}"
+								class="menu-img img"
+								th:style="'background-image: url(http://localhost:8082/files/' + ${ing.photo} + ');'"></div>
+						</div>
+					</div>
+
+					<!-- End loop -->
+				</div>
+			</div>
+		</section>
+
+
+
+
+
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row justify-content-center mb-5 pb-2">
+					<div class="col-md-12 text-center heading-section ftco-animate">
+						<span class="subheading">Chef</span>
+						<h2 class="mb-4">Our Master Chef</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="staff">
+							<div class="img"
+								style="background-image: url(/assets/images/chef-4.jpg);"></div>
+							<div class="text pt-4">
+								<h3>Viet Tien</h3>
+								<span class="position mb-2">Restaurant Owner</span>
+								<!-- <p>A small river named Duden flows by their place and supplies</p> -->
+								<div class="faded">
+									<!-- <p>I am an ambitious workaholic, but apart from that, pretty simple person.</p> -->
+									<ul class="ftco-social d-flex">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="staff">
+							<div class="img"
+								style="background-image: url(/assets/images/chef-2.jpg);"></div>
+							<div class="text pt-4">
+								<h3>Quoc Vinh</h3>
+								<span class="position mb-2">Head Chef</span>
+								<!-- <p>A small river named Duden flows by their place and supplies</p> -->
+								<div class="faded">
+									<!-- <p>I am an ambitious workaholic, but apart from that, pretty simple person.</p> -->
+									<ul class="ftco-social d-flex">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="staff">
+							<div class="img"
+								style="background-image: url(/assets/images/chef-3.jpg);"></div>
+							<div class="text pt-4">
+								<h3>Vinh Hao</h3>
+								<span class="position mb-2">Head Chef</span>
+								<!-- <p>A small river named Duden flows by their place and supplies</p> -->
+								<div class="faded">
+									<!-- <p>I am an ambitious workaholic, but apart from that, pretty simple person.</p> -->
+									<ul class="ftco-social d-flex">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</section>
+
+
+		<section class="ftco-section img"
+			style='background-image: url(/assets/images/bg_3.jpg)'
+			data-stellar-background-ratio="0.5">
+			<div class="container">
+				<div class="row d-flex">
+					<div
+						class="col-md-7 ftco-animate makereservation p-4 px-md-5 pb-md-5">
+						<div class="heading-section ftco-animate mb-5 text-center">
+							<span class="subheading">Book a table</span>
+							<h2 class="mb-4">Make Reservation</h2>
+						</div>
+						<form action="#">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Name</label> <input type="text"
+											class="form-control" placeholder="Your Name">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Email</label> <input type="text"
+											class="form-control" placeholder="Your Email">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Phone</label> <input type="text"
+											class="form-control" placeholder="Phone">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Phone</label> <input type="text"
+											class="form-control" id="book_date" placeholder="Date">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Time</label> <input type="text"
+											class="form-control" id="book_time" placeholder="Time">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Person</label>
+										<div class="select-wrap one-third">
+											<div class="icon">
+												<span class="ion-ios-arrow-down"></span>
+											</div>
+											<select name="" id="" class="form-control">
+												<option value="">Person</option>
+												<option value="">1</option>
+												<option value="">2</option>
+												<option value="">3</option>
+												<option value="">4+</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12 mt-3">
+									<div class="form-group text-center">
+										<input type="submit" value="Make a Reservation"
+											class="btn btn-primary py-3 px-5">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+		<section class="ftco-section bg-light">
+			<div class="container">
+				<div class="row justify-content-center mb-5 pb-2">
+					<div class="col-md-12 text-center heading-section ftco-animate">
+						<span class="subheading">Blog</span>
+						<h2 class="mb-4">Recent Posts</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div th:each="post : ${posts}" class="col-md-4 ftco-animate">
+						<div class="blog-entry">
+							<a th:href="@{/blog-single(id=${post.id})}" class="block-20"
+								th:style="'background-image: url(' + 'http://localhost:8082/files/' + ${post.image} + ');'">
+							</a>
+							<div class="text pt-3 pb-4 px-4">
+								<div class="meta">
+									<div>
+										<a th:text="${post.created_actor}"
+											th:href="@{/blog-single(id=${post.id})}"></a>
+									</div>
+								</div>
+								<h3 class="heading">
+									<a th:href="@{/blog-single(id=${post.id})}"
+										th:text="${post.title}"></a>
+								</h3>
+								<p class="clearfix">
+									<a th:href="@{/blog-single(id=${post.id})}"
+										class="float-left read">Read more</a> <a href="#"
+										class="float-right meta-chat"><span class="icon-chat"></span>
+										3</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+
+		<!-- Footer============================================= -->
+		<div th:replace="fragments/footer :: footer">&nbsp;</div>
+		<!-- #footer end -->
+
+	</div>
+	<!-- #wrapper end -->
+
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="bi-arrow-up"></div>
+
+	<!-- JavaScripts
+	============================================= -->
+	<div th:replace="fragments/partial :: page_script"></div>
+<script>
+$(document).ready(function() {
+    $('#searchButton').on('click', function() {
+        var keyword = $('#menuSearch').val().trim();
+        if (keyword.length > 0) {
+            $.ajax({
+                url: 'http://localhost:8082/apis/v1/ingredients/search',
+                type: 'GET',
+                data: { keyword: keyword },
+                success: function(response) {
+                    var resultsHtml = '';
+                    if (response.length > 0) {
+                        response.forEach(function(ingredient) {
+                            var imageUrl;
+                            if (ingredient.photo.startsWith('http')) {
+                                imageUrl = ingredient.photo;
+                            } else if (ingredient.photo.startsWith('/')) {
+                                imageUrl = 'http://localhost:8082/files' + ingredient.photo;
+                            } else {
+                                imageUrl = 'data:image/png;base64,' + ingredient.photo;
+                            }
+                            resultsHtml += `
+                                <div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+                                    <div class="menus d-sm-flex align-items-stretch">
+                                        <div class="menu-img img" style="background-image: url('${imageUrl}');"></div>
+                                        <div class="text d-flex align-items-center">
+                                            <div>
+                                                <div class="d-flex">
+                                                    <div class="one-half">
+                                                        <h3>${ingredient.ingredientName}</h3>
+                                                    </div>
+                                                    <div class="one-forth">
+                                                        <span class="price">$${ingredient.price.toFixed(2)}</span>
+                                                    </div>
+                                                </div>
+                                                <p>${ingredient.description}</p>
+                                                <p><span class="price">${ingredient.categoryName}</span> - Available: ${ingredient.quantityInStock}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                        });
+                        $('#menuResults').html(resultsHtml);
+                    } else {
+                        Toastify({
+                            text: "No ingredients found.",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top",
+                            position: 'center',
+                            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                        }).showToast();
+                    }
+                },
+                error: function() {
+                    alert('Error occurred while searching. Please try again.');
+                }
+            });
+        } else {
+            Toastify({
+                text: "Please enter a keyword to search.",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: 'center',
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            }).showToast();
+        }
+    });
+
+    $('#menuSearch').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            $('#searchButton').click();
+        }
+    });
+});
+
+</script>
+
+
+
+
+
+</body>
+</html>

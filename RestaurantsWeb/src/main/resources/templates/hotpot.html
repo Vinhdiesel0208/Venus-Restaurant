@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/partial :: page_head('Restaurant', 'none')" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+<style type="text/css">
+.menu-img {
+	position: relative;
+}
+
+.add-button {
+	border: none; /* Loại bỏ viền */
+	background: none; /* Loại bỏ nền */
+}
+
+p.col.text-center {
+	text-align: center;
+	font-size: 20px; /* Đặt kích thước chữ */
+	font-weight: bold; /* Đặt độ đậm của chữ */
+}
+
+.overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 10px;
+	box-sizing: border-box;
+	color: white;
+	text-align: center;
+}
+
+.menu-img .overlay {
+	display: block;
+}
+
+.minus {
+	border: none; /* Loại bỏ viền */
+	background: none; /* Loại bỏ nền */
+}
+
+.add-button {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.plus-icon {
+	background-color: rgba(255, 0, 0, 0.5);
+	/* Màu đỏ nhạt hơn và trong suốt */
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: background-color 0.3s;
+	/* Thêm transition cho hiệu ứng mượt mà */
+}
+
+.plus-icon:hover {
+	background-color: rgba(255, 0, 0, 0.8);
+	/* Màu đỏ chuyển đậm khi hover vào */
+}
+
+.plus-icon i {
+	color: white;
+}
+
+.shopping-cart-container {
+	position: fixed;
+	top: 350px; /* Điều chỉnh vị trí theo yêu cầu */
+	right: 20px; /* Điều chỉnh vị trí theo yêu cầu */
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	z-index: 9999; /* Điều chỉnh z-index */
+}
+
+.container {
+	max-width: 1300px;
+}
+
+/* CSS cho hotpot container */
+.hotpot-container {
+	width: 100%;
+	margin-bottom: 20px;
+	display: inline-block;
+}
+
+/* CSS cho hotpot item */
+/* CSS cho hotpot item */
+.hotpot-item {
+	display: block;
+	width: 100%;
+	margin-left: auto; /* Đẩy hotpot item ra bên phải */
+}
+
+/* Tạo khoảng cách giữa các tab */
+.nav-tabs li {
+	margin-right: 10px; /* Khoảng cách giữa các tab */
+}
+
+/* Thay đổi màu nền của tab đang được chọn */
+.nav-tabs li.active a {
+	background-color: #f0f0f0; /* Màu nền của tab đang được chọn */
+}
+
+/* Thay đổi màu chữ của tab đang được chọn */
+.nav-tabs li.active a {
+	color: #333; /* Màu chữ của tab đang được chọn */
+}
+
+
+</style>
+
+
+
+
+<body class="stretched">
+
+	<div id="wrapper">
+
+		<div th:replace="fragments/header :: header">&nbsp;</div>
+
+		<section class="hero-wrap hero-wrap-2"
+			style="background-image: url('/assets/images/bg_3.jpg');"
+			data-stellar-background-ratio="0.5">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate text-center mb-4">
+						<h1 class="mb-2 bread">Specialties</h1>
+						<p class="breadcrumbs">
+							<span class="mr-2"><a href="index.html">Home <i
+									class="ion-ios-arrow-forward"></i></a></span> <span>Menu <i
+								class="ion-ios-arrow-forward"></i></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="shopping-cart-container" id="shoppingCart">
+			<img src="/assets/images/images.png" alt="Shopping Cart" width="60"
+				height="60"> <span class="price text-success"
+				id="totalAmountModal" th:text="'$' + ${total}"></span><br /> <span>Please
+				Select a Dish</span><br /> Table: <span th:text="${tableName}"></span><br />
+		</div>
+
+
+
+
+		<div class="modal fade" id="cartModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header border-bottom-0">
+						<h5 class="modal-title" id="exampleModalLabel">
+							Table <span th:text="${tableName}"></span>
+						</h5>
+
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="panel with-nav-tabs panel-info">
+							<div class="panel-heading">
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="#tab1info" data-toggle="tab">Order</a></li>
+								
+
+
+								</ul>
+							</div>
+							<div class="panel-body">
+								<div class="tab-content">
+									<div class="tab-pane fade in active" id="tab1info">
+										<p class="col text-center">New Order</p>
+										<table class="table table-image">
+											<thead>
+												<tr>
+													<th scope="col"></th>
+													<th scope="col">Dish</th>
+													<th scope="col">Price</th>
+													<th scope="col">Quantity</th>
+													<th scope="col">Total</th>
+
+													<th scope="col">Actions</th>
+
+												</tr>
+											</thead>
+											<tbody>
+
+
+												<tr th:each="cartLine : ${cartLines}"
+													th:if="${cartLine.tableName == tableName}">
+													<td class="w-25"><img
+														th:src="@{http://localhost:8082/files/__${cartLine.ingredient.photo}__}"
+														class="img-fluid img-thumbnail" alt="Ingredient Photo"
+														src=""></td>
+
+													<td><span
+														th:text="${cartLine.ingredient.ingredientName}">Ingredient
+															Name</span><br /> <span th:if="${cartLine.halfPortion}">(Half
+															Portion)</span></td>
+
+													<td th:text="'$' + ${cartLine.price}">Price</td>
+													<td><span th:if="${cartLine.halfPortion}"> <span
+															th:text="${cartLine.quantity * 2}"></span>
+													</span> <span th:unless="${cartLine.halfPortion}"> <span
+															th:text="${cartLine.quantity}"></span>
+													</span></td>
+
+
+
+													<td><span th:if="${cartLine.halfPortion}"> <span
+															th:text="'$' + ${cartLine.price.multiply(cartLine.quantity.multiply(2))}"></span>
+													</span> <span th:unless="${cartLine.halfPortion}"> <span
+															th:text="'$' + ${cartLine.price.multiply(cartLine.quantity)}"></span>
+													</span></td>
+
+
+
+
+
+													<td>
+														<form id="removeForm" th:action="@{/remove}" method="get"
+															action="">
+															<input type="hidden" name="ingredientId"
+																th:value="${cartLine.ingredient.id}" /> <input
+																type="hidden" name="tableName" th:value="${tableName}" />
+															<input type="hidden" name="tableId" th:value="${tableId}" />
+															<input type="hidden" name="isHalfPortion"
+																th:value="${cartLine.halfPortion}" /> <input
+																type="hidden" name="ingredientId"
+																th:value="${cartLine.ingredient.id}"
+																data-selected="true" /> <input type="hidden"
+																name="tableId" th:value="${cartLine.restaurantTable.id}"
+																data-selected="true" /> <input type="hidden"
+																name="quantity" th:value="${cartLine.quantity}"
+																data-selected="true" /> <input type="hidden"
+																name="price" th:value="${cartLine.price}"
+																data-selected="true" /> <input type="hidden"
+																name="tableName" th:value="${tableName}"
+																data-selected="true" /> <input type="hidden"
+																name="halfPortion" th:value="${cartLine.halfPortion}"
+																data-selected="true" />
+
+															<button type="button"
+																class="remove-button btn btn-danger btn-sm">
+																<i class="fa fa-times"></i>
+															</button>
+														</form>
+													</td>
+											</tbody>
+										</table>
+										<div class="d-flex justify-content-end">
+											<h5>
+												Total: <span id="totalAmount" class="price text-success"
+													th:text="'$' + ${total}"></span>
+
+											</h5>
+										</div>
+										<div
+											class="modal-footer border-top-0 d-flex justify-content-between">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Close</button>
+											<form id="placeOrderForm" th:action="@{/place-order}"
+												method="post">
+												<th:block th:each="cartLine, cartLineStat : ${cartLines}">
+													<input type="hidden" name="ingredientId"
+														th:value="${cartLine.ingredient.id}" />
+													<input type="hidden" name="tableId"
+														th:value="${cartLine.restaurantTable.id}" />
+													<input type="hidden" name="quantity"
+														th:value="${cartLine.quantity}" />
+													<input type="hidden" name="price"
+														th:value="${cartLine.price}" />
+													<input type="hidden" name="tableName"
+														th:value="${tableName}" />
+													<input type="hidden" name="halfPortion"
+														th:value="${cartLine.halfPortion}" />
+												</th:block>
+												<button type="submit" id="placeOrderButton">Place
+													Order</button>
+											</form>
+
+
+
+
+										</div>
+									</div>
+									
+								</div>
+							</div>
+
+
+						</div>
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div th:if="${res}">
+			<button id="checkin-btn" class="btn btn-primary" type="button"
+				th:attr="data-table-id=${table}">Check-in</button>
+		</div>
+
+
+
+
+		<section class="ftco-section">
+			<div class="container">
+				<div class="ftco-search">
+					<div class="row">
+						
+						
+						<div id="square-container"></div>
+						
+						<div class="col-md-12 nav-link-wrap">
+							<div class="nav nav-pills d-flex text-center" id="v-pills-tab"
+								role="tablist" aria-orientation="vertical">
+
+								<a th:each="cat : ${listCate}"
+									th:if="${cat.categoryName == 'Hotpot'}"
+									th:id="'v-pills-' + ${cat.categoryName + '-tab'}"
+									class="nav-link ftco-animate" data-toggle="pill"
+									th:href="'#v-pills-' + ${cat.categoryName}" role="tab"
+									aria-controls="'v-pills-' + ${cat.categoryName}"
+									aria-selected="${cat.categoryName == 'Hotpot'}"
+									th:text="${cat.categoryName}"
+									th:classappend="${cat.categoryName == 'Hotpot'} ? 'active' : ''">Category
+									Name</a>
+
+							</div>
+						</div>
+						<div class="col-md-12 tab-wrap">
+							<div class="tab-content" id="v-pills-tabContent">
+
+								<div th:each="cat : ${listCate}"
+									th:id="'v-pills-' + ${cat.categoryName}" class="tab-pane fade"
+									role="tabpanel"
+									aria-labelledby="'v-pills-' + ${cat.categoryName + '-tab'}"
+									th:classappend="${cat.categoryName == 'Hotpot'} ? 'active show' : ''">
+
+
+
+
+
+									<div class="row">
+										<div class="col-md-6" th:each="ing, ingIndex : ${listIng}"
+											th:if="${ing.category.categoryName == cat.categoryName}">
+
+											<div th:if="${ing.category.categoryName == 'Hotpot'}"
+												class="hotpot-container">
+
+
+												<div class="col-md-12 hotpot-item">
+													<div
+														class="menus d-sm-flex ftco-animate align-items-stretch ">
+														<div class="menu-img img"
+															th:style="'background-image: url(http://localhost:8082/files/' + ${ing.photo} + ');'">
+															<div class="overlay"
+																th:if="${ing.description != null and ing.description != ''}">
+																<p class="description" th:text="${ing.description}"></p>
+															</div>
+														</div>
+														<div class="text d-flex align-items-center">
+															<div class="plus" style="width: 250px;">
+																<h3 th:text="${ing.ingredientName}"></h3>
+
+																<div class="float-right">
+																	<form id="addForm" action="/add" method="get">
+																		<input type="hidden" name="ingredientId"
+																			th:value="${ing.id}" /> <input type="hidden"
+																			name="quantity" value="1" /> <input type="hidden"
+																			class="price-input"
+																			th:id="'price_' + ${ingIndex.index}" name="price"
+																			th:value="${ing.price}" /> <input type="hidden"
+																			name="tableName" th:value="${tableName}" /> <input
+																			type="hidden" name="tableId" th:value="${tableId}" />
+
+																		<button type="submit" class="add-button"
+																			data-ingredient-id="${ing.id}"
+																			data-half-portion="${ing.halfPortionAvailable}">
+																			<div class="plus-icon">
+																				<i class="fa fa-plus"></i>
+																			</div>
+																		</button>
+																	</form>
+																</div>
+																<div class="float-right">
+																	<form id="removeForm" action="/removei" method="get">
+																		<input type="hidden" name="ingredientId"
+																			th:value="${ing.id}" /> <input type="hidden"
+																			name="quantity" value="1" /> <input type="hidden"
+																			class="price-input"
+																			th:id="'removePrice_' + ${ingIndex.index}"
+																			name="price" th:value="${ing.price}" /> <input
+																			type="hidden" name="tableName"
+																			th:value="${tableName}" /> <input type="hidden"
+																			name="tableId" th:value="${tableId}" />
+																		<button type="submit" class="minus"
+																			data-ingredient-id="${ing.id}"
+																			data-half-portion="${ing.halfPortionAvailable}">
+																			<div class="plus-icon">
+																				<i class="fa fa-minus"></i>
+																			</div>
+																		</button>
+																	</form>
+																</div>
+																<span class="price"
+																	th:id="'display_price_' + ${ingIndex.index}"
+																	th:text="'$' + ${ing.price}"></span>
+
+																<p>
+
+
+
+																	<span th:text="${ing.category.categoryName}"></span>
+																</p>
+
+																<p th:if="${ing.halfPortionAvailable}">
+																	<a href="#" class="btn btn-primary portion-button">Portion</a>
+																	<a href="#" class="btn btn-primary half-portion-button">Half
+																		Portion</a>
+																</p>
+																<p th:unless="${ing.halfPortionAvailable}">
+																	<a href="#" class="btn btn-primary portion-button">Portion</a>
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div th:unless="${cat.categoryName == 'Hotpot'}"
+												class="other-item">
+
+
+												<div
+													class="menus d-sm-flex ftco-animate align-items-stretch">
+													<div
+														th:if="${(ingIndex.index + 1) % 4 == 1 or (ingIndex.index + 1) % 4 == 2}"
+														class="menu-img img"
+														th:style="'background-image: url(http://localhost:8082/files/' + ${ing.photo} + ');'">
+														<div class="overlay"
+															th:if="${ing.description != null and ing.description != ''}">
+															<p class="description" th:text="${ing.description}"></p>
+														</div>
+													</div>
+													<div class="text d-flex align-items-center">
+														<div class="plus" style="width: 250px;">
+															<h3 th:text="${ing.ingredientName}"></h3>
+
+															<div class="float-right">
+																<form id="addForm" action="/add" method="get">
+																	<input type="hidden" name="ingredientId"
+																		th:value="${ing.id}" /> <input type="hidden"
+																		name="quantity" value="1" /> <input type="hidden"
+																		class="price-input"
+																		th:id="'price_' + ${ingIndex.index}" name="price"
+																		th:value="${ing.price}" /> <input type="hidden"
+																		name="tableName" th:value="${tableName}" /> <input
+																		type="hidden" name="tableId" th:value="${tableId}" />
+
+																	<button type="submit" class="add-button"
+																		data-ingredient-id="${ing.id}"
+																		data-half-portion="${ing.halfPortionAvailable}">
+																		<div class="plus-icon">
+																			<i class="fa fa-plus"></i>
+																		</div>
+																	</button>
+																</form>
+
+
+
+
+
+															</div>
+															<div class="float-right">
+																<form id="removeForm" action="/removei" method="get">
+																	<input type="hidden" name="ingredientId"
+																		th:value="${ing.id}" /> <input type="hidden"
+																		name="quantity" value="1" /> <input type="hidden"
+																		class="price-input"
+																		th:id="'removePrice_' + ${ingIndex.index}"
+																		name="price" th:value="${ing.price}" /> <input
+																		type="hidden" name="tableName" th:value="${tableName}" />
+																	<input type="hidden" name="tableId"
+																		th:value="${tableId}" />
+																	<button type="submit" class="minus"
+																		data-ingredient-id="${ing.id}"
+																		data-half-portion="${ing.halfPortionAvailable}">
+																		<div class="plus-icon">
+																			<i class="fa fa-minus"></i>
+																		</div>
+																	</button>
+																</form>
+															</div>
+															<span class="price"
+																th:id="'display_price_' + ${ingIndex.index}"
+																th:text="'$' + ${ing.price}"></span>
+
+
+
+
+															<p>
+																<span th:text="${ing.category.categoryName}"></span>
+
+															</p>
+															<p th:if="${ing.halfPortionAvailable}">
+
+																<a href="#" class="btn btn-primary portion-button">Portion</a>
+
+																<a href="#" class="btn btn-primary half-portion-button">Half
+																	Portion</a>
+															</p>
+															<p th:unless="${ing.halfPortionAvailable}">
+
+																<a href="#" class="btn btn-primary portion-button">Portion</a>
+
+															</p>
+
+
+														</div>
+													</div>
+													<div
+														th:if="${(ingIndex.index + 1) % 4 == 3 or (ingIndex.index + 1) % 4 == 0}"
+														class="menu-img img"
+														th:style="'background-image: url(http://localhost:8082/files/' + ${ing.photo} + ');'">
+														<div class="overlay" th:if="${ing.description}">
+															<p class="description" th:text="${ing.description}"></p>
+														</div>
+													</div>
+
+
+
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+	</div>
+	
+	
+	<script type="text/javascript">
+    document.querySelectorAll('.portion-button, .half-portion-button').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            var parentElement = this.closest('.plus');
+            var priceElement = parentElement.querySelector('.price');
+            
+            var displayPriceElement = parentElement.querySelector('.price-input');
+            var addPriceInput = parentElement.querySelector('#addForm .price-input');
+            var removePriceInput = parentElement.querySelector('#removeForm .price-input');
+
+            var priceText = priceElement.innerText;
+            var price = parseFloat(priceText.substring(1));
+
+            if (this.classList.contains('half-portion-button')) {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This is Half Portion!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, choose it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (!priceElement.hasAttribute('data-original-price')) {
+                            priceElement.setAttribute('data-original-price', price);
+                            addPriceInput.value = price / 2; 
+                            removePriceInput.value = price / 2; 
+                            priceElement.innerText = '$' + (price / 2);
+                        }
+                        parentElement.querySelector('input[name="quantity"]').value = 0.5;
+                        parentElement.querySelector('#removeForm input[name="quantity"]').value = 0.5;
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Half Portion selected",
+                            icon: "success"
+                        });
+                    }
+                });
+            } else {
+                if (priceElement.hasAttribute('data-original-price')) {
+                    var originalPrice = parseFloat(priceElement.getAttribute('data-original-price'));
+                    addPriceInput.value = originalPrice; 
+                    removePriceInput.value = originalPrice; 
+                    priceElement.innerText = '$' + originalPrice;
+                    priceElement.removeAttribute('data-original-price');
+                }
+                parentElement.querySelector('input[name="quantity"]').value = 1;
+                parentElement.querySelector('#removeForm input[name="quantity"]').value = 1;
+                Swal.fire({
+                    title: "Success!",
+                    text: "Portion selected",
+                    icon: "success"
+                });
+            }
+        });
+    });
+</script>
+
+
+
+	<script type="text/javascript">
+	
+	 function updateTotalAmounts(totalAmount) {
+	       
+	        var totalAmountElementOutside = document.getElementById('totalAmount');
+	        if (totalAmountElementOutside) {
+	            totalAmountElementOutside.innerText = '$' + totalAmount;
+	        }
+
+	       
+	        var totalAmountElementModal = document.getElementById('totalAmountModal');
+	        if (totalAmountElementModal) {
+	            totalAmountElementModal.innerText = '$' + totalAmount;
+	        }
+	    }
+	 function attachRemoveButtonEventListeners() {
+		    document.querySelectorAll('.remove-button').forEach(button => {
+		        button.addEventListener('click', function(event) {
+		            event.preventDefault();
+		            
+		            var form = this.closest('form');
+		            var formData = new FormData(form);
+		            
+		            fetch(form.getAttribute('action') + '?' + new URLSearchParams(formData), {
+		                method: 'GET',
+		                headers: {
+		                    'Content-Type': 'application/x-www-form-urlencoded',
+		                },
+		            })
+		            .then(response => {
+		                if (!response.ok) {
+		                    throw new Error('Network response was not ok');
+		                }
+		                return response.text();
+		            })
+		            .then(data => {
+		               
+		                var tableRow = button.closest('tr');
+		                tableRow.parentNode.removeChild(tableRow);
+		                
+		               
+		                var placeOrderForm = document.getElementById('placeOrderForm');
+		                var removeFormInputs = form.querySelectorAll('input[type="hidden"][data-selected="true"]');
+		                removeFormInputs.forEach(removeInput => {
+		                    var ingredientId = removeInput.getAttribute('name');
+		                    var ingredientValue = removeInput.value;
+
+		                    var correspondingInput = placeOrderForm.querySelector('input[name="' + ingredientId + '"][value="' + ingredientValue + '"]');
+
+		                    if (correspondingInput) {
+		                        correspondingInput.parentNode.removeChild(correspondingInput);
+		                    }
+		                });
+
+		                
+		                var ingredientId = formData.get('ingredientId');
+		                var tableName = formData.get('tableName');
+		                var isHalfPortion = formData.get('isHalfPortion');
+
+		                fetch(`/remove?ingredientId=${ingredientId}&tableName=${tableName}&isHalfPortion=${isHalfPortion}`, {
+		                    method: 'GET',
+		                })
+		                .then(response => {
+		                    if (!response.ok) {
+		                        throw new Error('Network response was not ok');
+		                    }
+		                    return response.text();
+		                })
+		                .then(data => {
+		                  
+		                    console.log('Success:', data);
+		                })
+		                .catch(error => {
+		                    console.error('Error:', error);
+		                });
+
+		               
+		                var totalAmount = calculateTotalAmount();
+		                updateTotalAmounts(totalAmount);
+		                updateOrderForm(cartLines);
+
+		                console.log('Success:', data);
+		            })
+		            .catch(error => {
+		                console.error('Error:', error);
+		            });
+		        });
+		    });
+		}
+
+	 function calculateTotalAmount() {
+		    var totalAmount = 0;
+		    var tableRows = document.querySelectorAll('#tab1info tbody tr');
+		    tableRows.forEach(row => {
+		        var lineTotalElement = row.querySelector('td:nth-child(5)');
+		        var lineTotal = parseFloat(lineTotalElement.innerText.replace('$', ''));
+		        totalAmount += lineTotal;
+		    });
+		    return totalAmount;
+		}
+	 
+	 document.querySelectorAll('#removeForm button[type="submit"]').forEach(button => {
+		    button.addEventListener('click', function(event) {
+		        event.preventDefault();
+
+		        var form = this.closest('form');
+
+		        var ingredientId = form.querySelector('[name="ingredientId"]').value;
+		        var tableId = form.querySelector('[name="tableId"]').value;
+		        var price = form.querySelector('[name="price"]').value;
+		        var tableName = form.querySelector('[name="tableName"]').value;
+		        var quantity = form.querySelector('[name="quantity"]').value;
+
+	            var queryString = `ingredientId=${ingredientId}&tableId=${tableId}&quantity=${quantity}&price=${price}&tableName=${tableName}`;
+	            var previousTotal = parseFloat(document.getElementById('totalAmountModal').innerText.replace('$', ''));
+
+		        fetch('/removei?' + queryString)
+		        .then(response => {
+		            if (!response.ok) {
+		                throw new Error('Network response was not ok');
+		            }
+		            return response.text();
+		        })
+		        .then(data => {
+		            var tempDiv = document.createElement('div');
+		            tempDiv.innerHTML = data;
+
+		            var shoppingCartContent = tempDiv.querySelector('#shoppingCart').innerHTML;
+		            var cartModalContent = tempDiv.querySelector('#cartModal').innerHTML;
+
+		            document.getElementById('shoppingCart').innerHTML = shoppingCartContent;
+		            document.getElementById('cartModal').innerHTML = cartModalContent;
+		            
+
+		            var newTotal = calculateTotalAmount();
+
+		           
+		            if (newTotal === previousTotal) {
+		              
+		            	Swal.fire({
+		            	    title: 'Item Removed!',
+		            	    text: 'The item has been removed from the cart.',
+		            	    icon: 'error',
+		            	    confirmButtonText: 'OK'
+		            	});
+
+		            }else{
+		            	 Swal.mixin({
+			                    toast: true
+			                }).fire({
+			                    title: 'Item Remove to cart!',
+			                    icon: 'success',
+			                    position: 'top-end',
+			                    showConfirmButton: false,
+			                    timer: 2000
+			                });
+			            
+		            }
+		            
+		           
+
+
+		            attachRemoveButtonEventListeners();
+		        })
+		        .catch(error => {
+		            console.error('There was a problem with your fetch operation:', error);
+
+		            document.getElementById('alertMessage').style.display = 'block';
+		        });
+		    });
+		});
+
+
+
+   
+	 document.querySelectorAll('#addForm button[type="submit"]').forEach(button => {
+		    button.addEventListener('click', function(event) {
+		        event.preventDefault(); 
+
+		        var form = this.closest('form');
+
+		        var ingredientId = form.querySelector('[name="ingredientId"]').value;
+		        var tableId = form.querySelector('[name="tableId"]').value;
+		        var price = form.querySelector('[name="price"]').value;
+		        var tableName = form.querySelector('[name="tableName"]').value;
+		        var quantity = form.querySelector('[name="quantity"]').value;
+
+		        var queryString = `ingredientId=${ingredientId}&tableId=${tableId}&quantity=${quantity}&price=${price}&tableName=${tableName}`;
+
+		      
+		        var previousTotal = parseFloat(document.getElementById('totalAmountModal').innerText.replace('$', ''));
+
+		        fetch('/add?' + queryString)
+		        .then(response => {
+		            if (!response.ok) {
+		                throw new Error('Network response was not ok');
+		            }
+		            return response.text();
+		        })
+		        .then(data => {
+		            var tempDiv = document.createElement('div');
+		            tempDiv.innerHTML = data;
+
+		            var shoppingCartContent = tempDiv.querySelector('#shoppingCart').innerHTML;
+		            var cartModalContent = tempDiv.querySelector('#cartModal').innerHTML;
+
+		            document.getElementById('shoppingCart').innerHTML = shoppingCartContent;
+		            document.getElementById('cartModal').innerHTML = cartModalContent;
+
+		          
+		            var newTotal = calculateTotalAmount();
+
+		           
+		            if (newTotal === previousTotal) {
+		              
+		                Swal.fire({
+		                    title: 'Out of stock!',
+		                    text: 'There was a problem with adding the item to cart.',
+		                    icon: 'error',
+		                    confirmButtonText: 'OK'
+		                });
+		            } else {
+		             
+		                
+		              
+
+		              
+		                Swal.mixin({
+		                    toast: true
+		                }).fire({
+		                    title: 'Item added to cart!',
+		                    icon: 'success',
+		                    position: 'top-end',
+		                    showConfirmButton: false,
+		                    timer: 2000
+		                });
+		            }
+
+	                updateTotalAmounts(newTotal);
+
+	            
+	                attachRemoveButtonEventListeners();
+		        })
+		        .catch(error => {
+		            console.error('There was a problem with your fetch operation:', error);
+		        });
+		    });
+		});
+
+
+	 document.addEventListener('DOMContentLoaded', function() {
+		    attachRemoveButtonEventListeners();
+		});
+  
+</script>
+	<!-- 
+<script>
+document.getElementById('placeOrderForm').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+   
+    var ingredientId = document.querySelector('#placeOrderForm [name="ingredientId"]').value;
+    var tableId = document.querySelector('#placeOrderForm [name="tableId"]').value;
+    var price = document.querySelector('#placeOrderForm [name="price"]').value;
+    var tableName = document.querySelector('#placeOrderForm [name="tableName"]').value;
+    var quantity = document.querySelector('#placeOrderForm [name="quantity"]').value;
+
+ 
+    var queryString = `ingredientId=${ingredientId}&tableId=${tableId}&quantity=${quantity}&price=${price}&tableName=${tableName}`;
+
+  
+    fetch('/place-order?' + queryString, {
+        method: 'POST' 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(data => {
+      
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = data;
+
+        var shoppingCartContent = tempDiv.querySelector('#shoppingCart').innerHTML;
+        var cartModalContent = tempDiv.querySelector('#cartModal').innerHTML;
+
+        document.getElementById('shoppingCart').innerHTML = shoppingCartContent;
+        document.getElementById('cartModal').innerHTML = cartModalContent;
+
+       
+
+       
+        document.getElementById('alertMessage').style.display = 'block';
+        setTimeout(function() {
+            document.getElementById('alertMessage').style.display = 'none';
+        }, 10); 
+    })
+    .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+    });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    attachRemoveButtonEventListeners();
+});
+</script>
+ -->
+
+
+
+
+
+	<script type="text/javascript">
+    document.getElementById("checkin-btn").addEventListener("click", function(event) {
+        event.preventDefault(); 
+        var tableId = this.getAttribute("data-table-id");
+
+        fetch("/checkin?tableId=" + tableId)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+
+                Swal.fire({
+                	  position: "top-end",
+                	  icon: "success",
+                	  title: "Check In Sucess",
+                	  showConfirmButton: false,
+                	  timer: 1500
+                	});
+
+              
+                document.getElementById("checkin-btn").style.display = "none";
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+            });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+	 
+	});
+
+</script>
+	<script th:inline="javascript" type="text/javascript">
+    document.getElementById("shoppingCart").addEventListener("click", function() {
+       
+        $('#cartModal').modal('show');
+        
+        $('a[href="#tab1info"]').tab('show');
+    });
+</script>
+
+
+
+
+
+
+	<div id="gotoTop" class="bi-arrow-up"></div>
+
+	<div th:replace="fragments/partial :: page_script"></div>
+
+</body>
+
+</html>

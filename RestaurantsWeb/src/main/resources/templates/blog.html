@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Venus Restaurant</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+<link rel="stylesheet" href="/assets/css/aos.css">
+
+<link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+<link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+
+
+<link rel="stylesheet" href="/assets/css/flaticon.css">
+<link rel="stylesheet" href="/assets/css/icomoon.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="py-1 bg-black top">
+		<div class="container">
+			<div
+				class="row no-gutters d-flex align-items-start align-items-center px-md-0">
+				<div class="col-lg-12 d-block">
+					<div class="row d-flex">
+						<div class="col-md pr-4 d-flex topper align-items-center">
+							<div
+								class="icon mr-2 d-flex justify-content-center align-items-center">
+								<span class="icon-phone2"></span>
+							</div>
+							<span class="text">+ 1235 2355 98</span>
+						</div>
+						<div class="col-md pr-4 d-flex topper align-items-center">
+							<div
+								class="icon mr-2 d-flex justify-content-center align-items-center">
+								<span class="icon-paper-plane"></span>
+							</div>
+							<span class="text">venusrestaurant@gmail.com</span>
+						</div>
+						<div
+							class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right justify-content-end">
+							<p class="mb-0 register-link">
+								<span>Open hours:</span> <span>Monday - Sunday</span> <span>8:00AM
+									- 9:00PM</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- END nav -->
+<header th:replace="fragments/header :: header"></header>
+	<section class="hero-wrap hero-wrap-2"
+		style="background-image: url('/assets/images/bg_3.jpg');"
+		data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div
+				class="row no-gutters slider-text align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate text-center mb-4">
+					<h1 class="mb-2 bread">Blog</h1>
+					<p class="breadcrumbs">
+						<span class="mr-2"><a href="index.html">Home <i
+								class="ion-ios-arrow-forward"></i></a></span> <span>Blog <i
+							class="ion-ios-arrow-forward"></i></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Form Tìm Kiếm -->
+	<div class="container mt-5">
+		<!-- Form Tìm Kiếm -->
+		<div class="row">
+			<div class="col-12">
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" id="search-keyword"
+						placeholder="Filling the word...">
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="button"
+							id="search-button">Search</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Kết Quả Tìm Kiếm -->
+		<div class="row" id="search-results"></div>
+	</div>
+
+
+	<section class="ftco-section bg-light">
+	
+		<div class="container">
+
+			<div class="row">
+				<div class="col-md-4 ftco-animate"
+					th:each="blog, iStat : ${blogPage.content}">
+					<div class="blog-entry">
+						<a th:href="@{/blog-single(id=${blog.id})}" class="block-20"
+							th:style="'background-image: url('+'http://localhost:8083/files/'+${blog.image}+');'">
+						</a>
+						<div class="text pt-3 pb-4 px-4">
+							<div class="meta">
+								<div>
+									<a th:href="@{/blog-single(id=${blog.id})}">
+										<p th:text="${blog.create_at}">
+									</a>
+								</div>
+								<div>
+									<a th:href="@{/blog-single(id=${blog.id})}"><p
+											th:text="${blog.created_actor}"></a>
+								</div>
+							</div>
+							<h3 class="heading">
+								<a th:href="@{/blog(size=${blog.id})}"><p
+										th:text="${blog.title}"></a>
+							</h3>
+							<p class="clearfix">
+								<a th:href="@{/blog-single(id=${blog.id})}"
+									class="float-left read">Read more</a>
+							</p>
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="row no-gutters my-5">
+				<div class="col text-center">
+					<div class="block-27">
+						<ul class="ul_top_hypers" th:if="${blogPage.totalPages > 0}"
+							th:each="pageNumber : ${pageNumbers}">
+							<li style="float: left;"
+								th:class="${pageNumber==blogPage.number + 1} ? active"><span><a
+									th:href="@{/blog(size=${blogPage.size}, page=${pageNumber})}"
+									th:text=${pageNumber}></a></span></li>
+
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="ftco-footer ftco-bg-dark ftco-section">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-md-6 col-lg-3">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Venus Restaurant</h2>
+						<p>Far far away, behind the word mountains, far from the
+							countries Vokalia and Consonantia, there live the blind texts.</p>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3"></div>
+
+				<div class="col-md-6 col-lg-3">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Newsletter</h2>
+						<p>Far far away, behind the word mountains, far from the
+							countries.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+
+					<p>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;
+						<script>
+							document.write(new Date().getFullYear());
+						</script>
+						All rights reserved | This template is made with <i
+							class="icon-heart" aria-hidden="true"></i> by <a
+							href="https://colorlib.com" target="_blank">Venus Restaurant</a>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+	<!-- loader -->
+	<div id="ftco-loader" class="show fullscreen">
+		<svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+		</svg>
+	</div>
+
+
+
+
+	<!-- Các script khác -->
+
+
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/assets/js/popper.min.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+	<script src="/assets/js/jquery.easing.1.3.js"></script>
+	<script src="/assets/js/jquery.waypoints.min.js"></script>
+	<script src="/assets/js/jquery.stellar.min.js"></script>
+	<script src="/assets/js/owl.carousel.min.js"></script>
+	<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+	<script src="/assets/js/aos.js"></script>
+	<script src="/assets/js/jquery.animateNumber.min.js"></script>
+	<script src="/assets/js/bootstrap-datepicker.js"></script>
+	<script src="/assets/js/jquery.timepicker.min.js"></script>
+	<script src="/assets/js/scrollax.min.js"></script>
+
+	<script src="/assets/js/main.js"></script>
+
+	<script>
+$(document).ready(function() {
+    $('#search-button').on('click', function() {
+        var keyword = $('#search-keyword').val().trim();
+        if (keyword.length > 0) {
+            $.ajax({
+                url: 'http://localhost:8082/apis/v1/posts/search', 
+                type: 'GET',
+                data: { keyword: keyword },
+                success: function(response) {
+                    var resultsHtml = '';
+                    if (response.length > 0) {
+                        response.forEach(function(post) {
+                            // Cập nhật URL cho nút "Read More"
+                            const postUrl = `/blog-single?id=${post.id}`; // Giả sử bạn có route như này trên server để xem chi tiết bài viết
+                            resultsHtml += `
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <img src="${post.image}" class="card-img-top" alt="${post.title}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${post.title}</h5>
+                                            <a href="${postUrl}" class="btn btn-primary">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>`;
+                        });
+                    } else {
+                        resultsHtml = '<div class="col-12">No posts found</div>';
+                    }
+                    $('#search-results').html(resultsHtml);
+                },
+
+                error: function() {
+                    alert('Please try again');
+                }
+            });
+        } else {
+            alert('Please filling some words for searching');
+        }
+    });
+});
+</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</body>
+
+</html>

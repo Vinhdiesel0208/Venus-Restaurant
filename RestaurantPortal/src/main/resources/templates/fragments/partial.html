@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="page_head(title, remove)" th:remove="${remove}">
+	<base href="../">
+	<title>Group 6 - [[${title}]]</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="shortcut icon" th:href="@{/assets/media/logos/favicon.ico}" />
+	<!--begin::Fonts-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+	<!--end::Fonts-->
+	<!--begin::Vendor Stylesheets(used by this page)-->
+	<link th:href="@{/assets/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/assets/plugins/custom/vis-timeline/vis-timeline.bundle.css}" rel="stylesheet" type="text/css" />
+	<!--end::Vendor Stylesheets-->
+	<!--begin::Global Stylesheets Bundle(used by all pages)-->
+	<link th:href="@{/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+	<!--end::Global Stylesheets Bundle-->
+	
+	<link rel="stylesheet" th:href="@{/assets/font-awesome.min.css}" type="text/css" />
+	<link rel="stylesheet" th:href="@{/assets/richtext.min.css}" type="text/css" />
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+	<th:block th:fragment="signin_script">
+   <!--begin::Custom Javascript(used by this page)-->
+   <script th:src="@{/assets/js/custom/authentication/sign-in/general.js}"></script>
+   <!--end::Custom Javascript-->
+   <!--end::Javascript-->
+</th:block>
+
+	<th:block th:fragment="global_script">
+		<script>var hostUrl = "@{/assets/}";</script>
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+		<script th:src="@{/assets/plugins/global/plugins.bundle.js}"></script>
+		<script th:src="@{/assets/js/scripts.bundle.js}"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used by this page)-->
+		<script th:src="@{/assets/plugins/custom/datatables/datatables.bundle.js}"></script>
+		<script th:src="@{/assets/plugins/custom/vis-timeline/vis-timeline.bundle.js}"></script>
+		<!--end::Vendors Javascript-->
+	</th:block>
+	
+	<th:block th:fragment="dashboard_script">
+		<!--begin::Custom Javascript(used by this page)-->
+		<script th:src="@{/assets/js/widgets.bundle.js}"></script>
+		<script th:src="@{/assets/js/custom/widgets.js}"></script>
+		<script th:src="@{/assets/js/custom/apps/chat/chat.js}"></script>
+		<script th:src="@{/assets/js/custom/utilities/modals/upgrade-plan.js}"></script>
+		<script th:src="@{/assets/js/custom/utilities/modals/users-search.js}"></script>
+		<!--end::Custom Javascript-->
+	</th:block>
+
+	<th:block th:fragment="users_script">
+		<!--begin::Custom Javascript(used by this page)-->
+		<script th:src="@{/assets/js/custom/apps/customers/list/export.js}"></script>
+		<script th:src="@{/assets/js/custom/apps/customers/list/list.js}"></script>
+		<script th:src="@{/assets/jquery.richtext.js}"></script>
+		<script th:src="@{/assets/jquery.richtext.min.js}"></script>
+		<script th:src="@{/assets/js/custom/apps/customers/add.js}"></script>
+		<script th:src="@{/assets/js/widgets.bundle.js}"></script>
+		<script th:src="@{/assets/js/custom/widgets.js}"></script>
+		<script th:src="@{/assets/js/custom/apps/chat/chat.js}"></script>
+		<script th:src="@{/assets/js/custom/utilities/modals/upgrade-plan.js}"></script>
+		<script th:src="@{/assets/js/custom/utilities/modals/create-app.js}"></script>
+		<script th:src="@{/assets/js/custom/utilities/modals/users-search.js}"></script>
+		<!--end::Custom Javascript-->
+	</th:block>
+
+</body>
+
+</html>

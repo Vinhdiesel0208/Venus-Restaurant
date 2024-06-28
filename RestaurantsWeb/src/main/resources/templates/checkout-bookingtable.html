@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+
+<head
+	th:replace="fragments/partial :: page_head('The Bags Shop', 'none')" />
+<style type="text/css">
+.col-25 {
+	-ms-flex: 25%; /* IE10 */
+	flex: 25%;
+}
+
+.col-50 {
+	-ms-flex: 50%; /* IE10 */
+	flex: 50%;
+}
+
+.col-75 {
+	-ms-flex: 75%; /* IE10 */
+	flex: 75%;
+}
+
+.col-25, .col-50, .col-75 {
+	padding: 0 16px;
+}
+
+@media ( max-width : 768px) {
+	.col-12 {
+		width: 100%;
+	}
+}
+
+#page {
+	background-color: #f2f2f2;
+	padding: 5px 20px 15px 20px;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+}
+
+input[type=text] {
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+input[type=email] {
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+label {
+	margin-bottom: 10px;
+	display: block;
+}
+
+.icon-container {
+	margin-bottom: 20px;
+	padding: 7px 0;
+	font-size: 24px;
+}
+
+#payment {
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.btn {
+	background-color: #04AA6D;
+	color: white;
+	padding: 12px;
+	margin: 10px 0;
+	border: none;
+	width: 100%;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.btn:hover {
+	background-color: #45a049;
+}
+
+a {
+	color: #2196F3;
+}
+
+hr {
+	border: 1px solid lightgrey;
+}
+
+span.price {
+	float: right;
+	color: grey;
+}
+
+#customer-info {
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+#customer-info h3 {
+	font-size: 1.5rem;
+	margin-bottom: 15px;
+}
+
+#customer-info p {
+	margin-bottom: 10px;
+}
+
+#customer-info button {
+	padding: 8px 16px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#customer-info button:hover {
+	background-color: #0056b3;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+</style>
+<style>
+@media ( max-width : 768px) {
+	.col-md-7 {
+		width: 50%;
+		margin-bottom: 10px;
+	}
+}
+</style>
+
+<style>
+.radio-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.radio-button {
+	display: inline-block;
+	width: 130px; /* Điều chỉnh kích thước nút radio */
+	height: 130px; /* Điều chỉnh kích thước nút radio */
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	cursor: pointer;
+	margin-right: 10px;
+	border: 2px solid transparent; /* Đảm bảo nút không có viền ban đầu */
+}
+/* Ẩn nút radio */
+
+/* Định dạng nút radio được chọn */
+input[type="radio"]:checked+.radio-button {
+	border-color: red; /* Màu viền khi nút được chọn */
+}
+
+/* Hiệu ứng khi rê chuột vào nút */
+.radio-button:hover {
+	border-color: red; /* Màu viền khi rê chuột vào nút */
+}
+
+@media ( max-width : 768px) {
+	.radio-button {
+		width: 100px;
+		/* Điều chỉnh kích thước nút radio khi màn hình nhỏ hơn 768px */
+		height: 100px;
+		/* Điều chỉnh kích thước nút radio khi màn hình nhỏ hơn 768px */
+	}
+}
+
+.payment-options {
+	justify-content: space-around; /* Căn giữa các nút thanh toán */
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px; /* Khoảng cách giữa các nút */
+}
+
+/* CSS cho các nút tip */
+.tip-radio-button {
+	display: inline-block;
+	width: 170px; /* Giữ nguyên kích thước nút tip */
+	height: 170px; /* Giữ nguyên kích thước nút tip */
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	cursor: pointer;
+	margin-right: 10px;
+	border: 2px solid transparent; /* Đảm bảo nút không có viền ban đầu */
+}
+/* Định dạng nút radio được chọn */
+input[type="radio"]:checked+.tip-radio-button {
+	border-color: gray; /* Màu viền khi nút được chọn */
+}
+
+/* Hiệu ứng khi rê chuột vào nút */
+.tip-radio-button:hover {
+	border-color: gray; /* Màu viền khi rê chuột vào nút */
+}
+
+.radio-button {
+	width: 50px;
+	height: 50px;
+	background-size: cover;
+	display: inline-block;
+	margin: 0 10px;
+	cursor: pointer;
+}
+</style>
+
+<body class="stretched">
+
+	<div id="wrapper">
+
+		<div th:replace="fragments/header :: header">&nbsp;</div>
+
+		<section class="hero-wrap hero-wrap-2"
+			style="background-image: url('/assets/images/bg_3.jpg');"
+			data-stellar-background-ratio="0.5">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate text-center mb-4">
+						<h1 class="mb-2 bread">Check Out</h1>
+						<p class="breadcrumbs">
+							<span class="mr-2"><a href="index.html">Home <i
+									class="ion-ios-arrow-forward"></i></a></span> <span>Checkout<i
+								class="ion-ios-arrow-forward"></i></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div id="payment">
+			<section class="ftco-section">
+				<form id="checkout-form" th:action="@{/booktable/process}"
+					method="post" th:object="${bookingTable}">
+					<div class="row">
+
+						<div class="col-12  col-lg-8">
+							<div class="container" id="page">
+								<div class="row">
+									<!-- Customer Info -->
+									<div class="col-md-6">
+										<h3>Customer Info</h3>
+										<label for="fname"><i class="fa fa-user"></i> Full
+											Name</label> <input type="text" id="fname" name="*{name}"
+											th:field="*{name}" readonly> <label for="email"><i
+											class="fa fa-envelope"></i> Email</label> <input type="email"
+											id="email" name="email" th:field="*{email}"
+											readonly="readonly"> <br> <input type="hidden"
+											id="phone_number" name="phone_number" class="form-control"
+											th:field="*{phone_number}" > <input
+											type="hidden" id="date" name="date" class="form-control"
+											th:field="*{date}" > <input type="hidden"
+											id="start_time" name="start_time" class="form-control"
+											th:field="*{start_time}" > <input type="hidden"
+											id="end_time" name="end_time" class="form-control"
+											th:field="*{end_time}"> <input type="hidden"
+											id="person_number" name="person_number" class="form-control"
+											th:field="*{person_number}" > <input
+											type="hidden" id="tableId" name="tableId"
+											th:value="*{tableId}">
+										<!-- Search Customer Form -->
+
+									</div>
+
+									<div class="col-md-5 mt-md-0 mt-3">
+										<h3>Payment</h3>
+										<div class="d-flex">
+											<!-- VnPay radio button -->
+											<div onclick="setPaymentMethod('paypal')">
+												<input type="radio" required id="pay-pal" name="pay-method"
+													value="paypal" style="display: none;"> <label
+													for="pay-pal" class="radio-button"
+													style="background-image: url('/assets/images/PayPal-.jpg')"></label>
+											</div>
+											<div onclick="setPaymentMethod('vnpay')">
+												<input type="radio" required id="vn-pay" name="pay-method"
+													value="vnpay" style="display: none;"> <label
+													for="vn-pay" class="radio-button"
+													style="background-image: url('/assets/images/vnpay.png')"></label>
+											</div>
+											<!-- Cash radio button -->
+											
+										</div>
+										<!-- Tips -->
+									</div>
+
+								</div>
+
+								<div class="col-12 alert alert-info" role="alert">
+									<ul>
+										<li>Customers who reserve a table must pay a reservation
+											fee.</li>
+										<li>We will not refund, so please consider carefully.</li>
+										<li>If the customer arrives 30 minutes late, please
+											notify us.</li>
+										<li>Booking a table is successful only when you press the "Done" button and receive an email</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- Order Summary -->
+						<div class="col-12 col-lg-4">
+
+							<table class="table" id="order-table">
+								<thead>
+									<tr>
+										<th scope="col">Table Name</th>
+										<th scope="col">Price</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr>
+										<td><label th:text="${table.tableNumber}"></label></td>
+										<td><span id="totalAmount" class=" text-success"><label
+												th:text="'$ ' +${table.price}"></label></span></td>
+
+									</tr>
+
+								</tbody>
+							</table>
+
+
+
+
+
+							<!-- Continue to checkout button -->
+							<input type="submit" value="Continue to checkout" class="btn">
+						</div>
+					</div>
+				</form>
+
+
+
+
+			</section>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+		<script>
+			document
+					.getElementById('checkout-form')
+					.addEventListener(
+							'submit',
+							function(event) {
+								// Kiểm tra xem người dùng đã chọn phương thức thanh toán chưa
+								var paymentMethod = document
+										.querySelector('input[name="pay-method"]:checked');
+								if (!paymentMethod) {
+									Swal
+											.fire({
+												icon : 'error',
+												title : 'Payment Method Not Selected',
+												text : 'Please select a payment method before proceeding to checkout.',
+											});
+									return false;
+								}
+
+								// Kiểm tra xem người dùng đã nhập email hay chưa
+								var email = document.getElementById('email').value
+										.trim();
+								if (email === '') {
+									Swal
+											.fire({
+												icon : 'error',
+												title : 'Email Required',
+												text : 'Please enter your email before proceeding to checkout.',
+											});
+									return false;
+								}
+
+								// Kiểm tra xem email nhập vào có hợp lệ hay không (đã validate email format)
+								var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+								if (!emailPattern.test(email)) {
+									Swal
+											.fire({
+												icon : 'error',
+												title : 'Invalid Email',
+												text : 'Please enter a valid email address before proceeding to checkout.',
+											});
+									return false;
+								}
+
+								// Thêm các kiểm tra khác nếu cần
+
+								// Nếu không có lỗi, tiếp tục gửi form đi
+							});
+		</script>
+
+
+
+
+
+		<script type="text/javascript">
+			contextPath = "[[@{/}]]";
+			var csrfHeaderName = "[[${_csrf.headerName}]]";
+			var csrfValue = "[[${_csrf.token}]]";
+		</script>
+		<script>
+			function setPaymentMethod(name) {
+				document.getElementById('payment-method').value = name;
+			}
+
+			document
+					.getElementById('search-form')
+					.addEventListener(
+							'submit',
+							function(event) {
+								event.preventDefault();
+								var email = document
+										.getElementById('search-email').value;
+								var xhr = new XMLHttpRequest();
+								xhr.open('GET', '/search-customer?email='
+										+ email, true);
+								xhr.onreadystatechange = function() {
+									if (xhr.readyState == XMLHttpRequest.DONE) {
+										if (xhr.status == 200) {
+											var customer = JSON
+													.parse(xhr.responseText);
+
+											document
+													.getElementById('customer-name').innerText = customer.fullName;
+											document
+													.getElementById('customer-email').innerText = customer.email;
+											document
+													.getElementById('customer-points').innerText = customer.points;
+											document
+													.getElementById('customer-info').style.display = 'block';
+
+										} else {
+
+										}
+									}
+								};
+								xhr.send();
+							});
+			var pointsRedeemed = false;
+
+			function redeemPoints() {
+				if (!pointsRedeemed) {
+					pointsRedeemed = true;
+
+					var points = parseFloat(document
+							.getElementById('customer-points').innerText);
+					var grandTotalElement = document
+							.getElementById('grandTotalAmount');
+					var grandTotal = parseFloat(grandTotalElement.innerText
+							.replace('$', ''));
+					var tipRadios = document
+							.querySelectorAll('input[name="tip-amount"]:checked');
+					var tipAmount = 0;
+
+					if (tipRadios.length > 0) {
+						tipAmount = parseFloat(tipRadios[0].value);
+					}
+
+					var discountRate = points / 10;
+					var discountAmount = discountRate;
+					var newGrandTotal = grandTotal - discountAmount;
+
+					if (newGrandTotal < 0) {
+						newGrandTotal = 0;
+					}
+
+					grandTotalElement.innerText = '$'
+							+ newGrandTotal.toFixed(2);
+
+					var discountInfo = document.getElementById('discount-info');
+					var discountAmountElement = document
+							.getElementById('discountAmount');
+					discountAmountElement.innerText = '$'
+							+ discountAmount.toFixed(2);
+					discountInfo.style.display = 'block';
+
+					var discountInput = document
+							.getElementById('discountInput');
+					discountInput.value = discountAmount.toFixed(2);
+					subtotalInput.value = newGrandTotal.toFixed(2);
+
+					Swal.fire({
+						icon : 'success',
+						title : 'Points Redeemed',
+						text : 'Points redeemed successfully!',
+						confirmButtonText : 'OK'
+					});
+				}
+			}
+		</script>
+
+		<script>
+			var tipRadios = document
+					.querySelectorAll('input[name="tip-amount"]');
+			var grandTotalElement = document.getElementById('grandTotalAmount');
+			var subtotalInput = document.getElementById('subtotalValue');
+			var currentTipAmount = 0;
+
+			tipRadios
+					.forEach(function(radio) {
+						radio
+								.addEventListener(
+										'change',
+										function() {
+											if (this.checked) {
+												var newTipAmount = parseFloat(this.value);
+												var tipAmountDisplay = document
+														.getElementById('tipAmountDisplay');
+												var grandTotal = parseFloat(grandTotalElement.innerText
+														.replace('$', ''));
+												var taxAmount = parseFloat(document
+														.getElementById('taxAmount').innerText
+														.replace('$', ''));
+
+												var tipAmountInfo = document
+														.getElementById('tipAmountInfo');
+
+												grandTotal -= currentTipAmount;
+
+												var tipAmountFormatted = '$'
+														+ newTipAmount
+																.toFixed(2);
+												tipAmountDisplay.innerText = tipAmountFormatted;
+												tipAmountInfo.style.display = 'block';
+
+												grandTotal += newTipAmount;
+												grandTotalElement.innerText = '$'
+														+ grandTotal.toFixed(2);
+												currentTipAmount = newTipAmount;
+
+												subtotalInput.value = grandTotal
+														.toFixed(2);
+											} else {
+												this.checked = false;
+												document
+														.getElementById('tipAmountInfo').style.display = 'none';
+											}
+										});
+					});
+			document
+					.getElementById('checkout-form')
+					.addEventListener(
+							'submit',
+							function(event) {
+								var email1 = document.getElementById('email').value;
+								var email2 = document
+										.getElementById('search-email').value;
+
+								if (email2 !== "" && email1 !== email2) {
+									event.preventDefault();
+									alert('Email addresses must match! Please make sure both email addresses are the same.');
+									return false;
+								}
+							});
+		</script>
+
+
+
+		<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+	</div>
+
+	<div id="gotoTop" class="bi-arrow-up"></div>
+
+	<div th:replace="fragments/partial :: page_script"></div>
+
+</body>
+
+</html>
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookings List</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: center;
+        }
+        .table thead th {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Booking Table List</h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="booking : ${listBookingTables}">
+                <td th:text="${booking.name}"></td>
+                <td th:text="${booking.email}"></td>
+                <td th:text="${booking.phone_number}"></td>
+                <td th:text="${booking.date}"></td>
+                <td th:text="${booking.start_time}"></td>
+                <td th:text="${booking.end_time}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

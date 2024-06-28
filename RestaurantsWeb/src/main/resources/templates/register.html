@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--begin::Head-->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+@import
+	url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: #f6f5f7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 100vh;
+	margin: -20px 0 50px;
+}
+
+h1 {
+	font-weight: bold;
+	margin: 0;
+}
+
+h2 {
+	text-align: center;
+}
+
+p {
+	font-size: 14px;
+	font-weight: 100;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	margin: 20px 0 30px;
+}
+
+span {
+	font-size: 12px;
+}
+
+a {
+	color: #333;
+	font-size: 14px;
+	text-decoration: none;
+	margin: 15px 0;
+}
+
+button {
+	border-radius: 20px;
+	border: 1px solid #FF4B2B;
+	background-color: #FF4B2B;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+button:active {
+	transform: scale(0.95);
+}
+
+button:focus {
+	outline: none;
+}
+
+button.ghost {
+	background-color: transparent;
+	border-color: #FFFFFF;
+}
+
+form {
+	background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 80px;
+	height: 100%;
+	text-align: center;
+}
+
+input {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+}
+
+.container {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+	position: relative;
+	overflow: hidden;
+	width: 1000px;
+	height: 688px;
+}
+
+.form-container {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	transition: all 0.6s ease-in-out;
+}
+
+.sign-up-container {
+	left: 0;
+	width: 50%;
+	z-index: 2;
+}
+
+.container.right-panel-active .sign-up-container {
+	transform: translateX(100%);
+}
+
+.overlay-container {
+	position: absolute;
+	top: 0;
+	left: 55%;
+	width: 80%;
+	height: 100%;
+	overflow: hidden;
+	transition: transform 0.6s ease-in-out;
+	z-index: 100;
+}
+
+.overlay {
+	background: #FF416C;
+	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+	background: linear-gradient(to right, #FF4B2B, #FF416C);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
+	color: #FFFFFF;
+	position: relative;
+	left: -100%;
+	height: 100%;
+	width: 200%;
+	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+
+.overlay-panel {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 40px;
+	text-align: center;
+	top: 0;
+	height: 100%;
+	width: 50%;
+	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+	transform: translateX(-20%);
+}
+
+.overlay-right {
+	right: 0;
+	transform: translateX(0);
+	width: 50%; /* Thay đổi kích thước mong muốn, ví dụ: 100% */
+}
+
+footer {
+	background-color: #222;
+	color: #fff;
+	font-size: 14px;
+	bottom: 0;
+	position: fixed;
+	left: 0;
+	right: 0;
+	text-align: center;
+	z-index: 999;
+}
+
+footer p {
+	margin: 10px 0;
+}
+
+footer i {
+	color: red;
+}
+
+footer a {
+	color: #3c97bf;
+	text-decoration: none;
+}
+</style>
+</head>
+<body class="stretched">
+
+	<!-- Document Wrapper -->
+	<div id="wrapper">
+		<div class="container" id="container">
+			<div class="form-container sign-up-container">
+				<form id="login-form" name="login-form" class="mb-0"
+					th:action="@{/register}" method="post" th:object="${customer}">
+					<h1 class="fs-4 fw-semibold text-center mb-0">Register</h1>
+
+					<div class="row">
+						<div class="col-12 form-group mb-4">
+							<label for="register-form-email">Email</label> <input type="text"
+								id="register-form-email" name="register-form-email" value=""
+								th:field="*{email}" class="form-control not-dark">
+							<div class="text-danger" th:if="${#fields.hasErrors('email')}"
+								th:errors="*{email}"></div>
+						</div>
+
+						<div class="col-12 form-group mb-4">
+							<label for="register-form-fullName">Full Name:</label> <input
+								type="text" id="register-form-fullName"
+								name="register-form-fullName" value="" th:field="*{fullName}"
+								class="form-control not-dark">
+							<div class="text-danger" th:if="${#fields.hasErrors('fullName')}"
+								th:errors="*{fullName}"></div>
+
+						</div>
+
+						<div class="col-12 form-group mb-4">
+							<label for="register-form-phone">Phone:</label> <input
+								type="text" id="register-form-phone" name="register-form-phone"
+								value="" th:field="*{phoneNumber}" class="form-control">
+							<div class="text-danger"
+								th:if="${#fields.hasErrors('phoneNumber')}"
+								th:errors="*{phoneNumber}"></div>
+
+						</div>
+
+						<div class="col-12 form-group mb-4">
+							<label for="register-form-password">Password:</label> <input
+								type="password" id="register-form-password"
+								name="register-form-password" value="" th:field="*{password}"
+								class="form-control">
+							<div class="text-danger" th:if="${#fields.hasErrors('password')}"
+								th:errors="*{password}"></div>
+
+						</div>
+
+						<div class="col-12 form-group mb-4">
+							<label for="register-form-repassword">Re-enter Password:</label>
+							<input type="password" id="register-form-repassword"
+								name="register-form-repassword" value="" class="form-control">
+						</div>
+
+						<h2 class="fs-5 text-center fw-medium mb-5 mt-1">
+							<span class="op-06 nocolor">Already have an Account?</span> <a
+								th:href="@{/login}">Sign In</a>
+						</h2>
+					</div>
+
+					<div class="col-12 form-group mb-0">
+						<button
+							class="btn btn-lg text-white bg-black h-bg-color d-block w-100 m-0"
+							id="register-form-submit" name="register-form-submit"
+							value="register">Register Now</button>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="successModal" tabindex="-1"
+						aria-labelledby="successModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="successModalLabel">Success!</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">Registration successful! Please
+									check your email for further instructions.</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="overlay-container">
+				<div class="overlay">
+					<div class="overlay-panel overlay-right">
+						<!-- <h1>Hello, Friend!</h1>
+						<p>Enter your personal details and start journey with us</p> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="gotoTop" class="uil uil-angle-up"></div>
+	</div>
+
+	<!-- JavaScripts -->
+	<script src="js/functions.js" type="text/javascript"></script>
+	<script>
+	    const signUpButton = document.getElementById('signUp');
+	    const signInButton = document.getElementById('signIn');
+	    const container = document.getElementById('container');
+	
+	    signUpButton.addEventListener('click', () => {
+	        container.classList.add("right-panel-active");
+	    });
+	
+	    signInButton.addEventListener('click', () => {
+	        container.classList.remove("right-panel-active");
+	    });
+	</script>
+
+	<script>
+		// Function to validate form fields
+		function validateForm() {
+		    var email = document.getElementById('register-form-email').value;
+		    var fullName = document.getElementById('register-form-fullName').value;
+		    var phone = document.getElementById('register-form-phone').value;
+		    var password = document.getElementById('register-form-password').value;
+		    var repassword = document.getElementById('register-form-repassword').value;
+
+		    // Check if any field is empty
+		    if (email === '' || fullName === '' || phone === '' || password === '' || repassword === '') {
+		        alert('All fields are required.');
+		        return false;
+		    }
+
+		    // Check if passwords match
+		    if (password !== repassword) {
+		        alert('Passwords do not match.');
+		        return false;
+		    }
+		    
+		 // Check if email exists in database
+		    var emailExists = checkEmailExists(email);
+		    if (emailExists) {
+		        alert('Email already exists.');
+		        return false;
+		    }
+		    
+		    
+		 // Function to check if email exists in database
+		    function checkEmailExists(email) {
+		        // Perform an AJAX request or fetch to your server-side endpoint to check if the email exists in the database
+		        // Return true if email exists, false otherwise
+		        // Example:
+		        var xhr = new XMLHttpRequest();
+		        xhr.open('GET', '/checkEmail?email=' + encodeURIComponent(email), false);
+		        xhr.send();
+		        return xhr.responseText === 'true'; // Assuming the response is 'true' if email exists
+		    }
+		 return true;
+		}
+
+		// Add event listener to form submission
+		document.getElementById('login-form').addEventListener('submit', function(event) {
+		    // Prevent form submission if fields are invalid
+		    if (!validateForm()) {
+		        event.preventDefault();
+		    } else {
+		        // Show success modal
+		        $('#successModal').modal('show');
+		    }		
+		    });
+</script>
+</body>
+</html>

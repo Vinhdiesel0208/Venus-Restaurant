@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--begin::Head-->
+
+<head
+	th:replace="fragments/partial :: page_head('Reservation Info', 'none')" />
+<!--end::Head-->
+<!--begin::Body-->
+
+<body data-kt-name="metronic" id="kt_app_body"
+	data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
+	data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
+	data-kt-app-sidebar-hoverable="true"
+	data-kt-app-sidebar-push-header="true"
+	data-kt-app-sidebar-push-toolbar="true"
+	data-kt-app-sidebar-push-footer="true"
+	data-kt-app-toolbar-enabled="true" class="app-default">
+	<!--begin::Theme mode setup on page load-->
+	<script>
+		if (document.documentElement) {
+			const defaultThemeMode = "system";
+			const name = document.body.getAttribute("data-kt-name");
+			let themeMode = localStorage.getItem("kt_"
+					+ (name !== null ? name + "_" : "") + "theme_mode_value");
+			if (themeMode === null) {
+				if (defaultThemeMode === "system") {
+					themeMode = window
+							.matchMedia("(prefers-color-scheme: dark)").matches ? "dark"
+							: "light";
+				} else {
+					themeMode = defaultThemeMode;
+				}
+			}
+			document.documentElement.setAttribute("data-theme", themeMode);
+		}
+	</script>
+	<!--end::Theme mode setup on page load-->
+	<!--begin::App-->
+	<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+		<!--begin::Page-->
+		<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+			<div th:replace="fragments/header :: header">&nbsp;</div>
+			<!--begin::Wrapper-->
+			<div class="app-wrapper flex-column flex-row-fluid"
+				id="kt_app_wrapper">
+				<div th:replace="fragments/sidebar :: sidebar"></div>
+				<!--begin::Main-->
+				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+					<!--begin::Content wrapper-->
+					<div class="d-flex flex-column flex-column-fluid">
+						<!--begin::Toolbar-->
+						<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+							<!--begin::Toolbar container-->
+							<div id="kt_app_toolbar_container"
+								class="app-container container-xxl d-flex flex-stack">
+								<!--begin::Page title-->
+								<div
+									class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+									<!--begin::Title-->
+									<h1
+										class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+										Reservation Info</h1>
+									<!--end::Title-->
+									<!--begin::Breadcrumb-->
+
+									<!--end::Breadcrumb-->
+								</div>
+								<!--end::Page title-->
+							</div>
+							<!--end::Toolbar container-->
+						</div>
+						<!--end::Toolbar-->
+						<!--begin::Content-->
+						<div id="kt_app_content" class="app-content flex-column-fluid">
+							<!--begin::Content container-->
+							<div id="kt_app_content_container"
+								class="app-container container-xxl">
+								<!--begin::Card-->
+								<div class="card">
+									<!--begin::Card header-->
+									<div class="card-header border-0 pt-6">
+
+										<!--begin::Card title-->
+										<div class="card-title">
+											<!--begin::Search-->
+											<div class="d-flex align-items-center position-relative my-1">
+												<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+
+												<!--end::Svg Icon-->
+
+											</div>
+										</div>
+
+									</div>
+									<div class="card-body pt-0">
+										<form th:action="@{reservation/reservationInfo}" method="get">
+											<div class="col-md-3">
+												<div class="form-group d-flex">
+													<input
+														type="date" class="form-control mr-2" name="date"
+														id="book_date" placeholder="Date">
+													<button type="submit" class="btn btn-primary">Search</button>
+												</div>
+											</div>
+
+
+											<table class="table align-middle table-row-dashed fs-6 gy-5"
+												id="kt_customers_table_skip">
+												<thead>
+													<tr
+														class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+														<th class="w-10px pe-2">
+															<div>
+																<label >Table</label>
+															</div>
+														</th>
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																9:00 AM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																10:00 AM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																11:00 AM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																12:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																1:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																2:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																3:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																4:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																5:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																6:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																7:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																8:00 PM</a>
+														</th>
+
+														<th
+															th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+															<a
+															th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+																9:00 PM</a>
+														</th>
+
+
+													</tr>
+												</thead>
+												<tbody class="fw-semibold text-gray-600">
+													<tr th:each="row : ${reservationData}">
+														<td th:text="${row[0]}"></td>
+														<td th:text="${row[1]}"></td>
+														<td th:text="${row[2]}"></td>
+														<td th:text="${row[3]}"></td>
+														<td th:text="${row[4]}"></td>
+														<td th:text="${row[5]}"></td>
+														<td th:text="${row[6]}"></td>
+														<td th:text="${row[7]}"></td>
+														<td th:text="${row[8]}"></td>
+														<td th:text="${row[9]}"></td>
+														<td th:text="${row[10]}"></td>
+														<td th:text="${row[11]}"></td>
+														<td th:text="${row[12]}"></td>
+														<td th:text="${row[13]}"></td>
+													</tr>
+												</tbody>
+												<!--end::Table body-->
+											</table>
+										</form>
+										<!--end::Table-->
+										<!--begin::Paginate-->
+										<div th:if="${totalPages > 1}">
+											<ul class="pagination">
+												<li
+													th:class="${currentPage > 1 ? 'page-item previous' : 'page-item previous disabled'}">
+													<a
+													th:href="@{${moduleURL} + '/page/' + ${currentPage - 1} + ${queryParams}}"
+													class="page-link"><i class="previous"></i></a>
+												</li>
+												<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+													th:class="${currentPage != i ? 'page-item' : 'page-item active'}">
+													<a
+													th:href="@{${moduleURL} + '/page/' + ${i} + ${queryParams}}"
+													class="page-link" th:text="${i}"></a>
+												</li>
+												<li
+													th:class="${currentPage < totalPages ? 'page-item next' : 'page-item next disabled' }">
+													<a
+													th:href="@{${moduleURL} + '/page/' + ${currentPage + 1} + ${queryParams}}"
+													class="page-link"><i class="next"></i></a>
+												</li>
+											</ul>
+										</div>
+										<!--end::Paginate-->
+
+									</div>
+									<!--end::Card body-->
+
+									<!--end::Card-->
+									<!--begin::Modals-->
+									<!--begin::Modal - User - Add-->
+									<div class="modal fade" id="kt_modal_add_customer"
+										tabindex="-1" aria-hidden="true">
+										<!--begin::Modal dialog-->
+										<div class="modal-dialog modal-dialog-centered mw-650px">
+											<!--begin::Modal content-->
+											<div class="modal-content">
+												<!--begin::Form Trung3T-->
+												<form class="form" th:action="@{roles/add}"
+													id="kt_modal_add_customer_form" data-kt-redirect="users"
+													method="post">
+													<!--begin::Modal header-->
+													<div class="modal-header" id="kt_modal_add_customer_header">
+														<!--begin::Modal title-->
+														<h2 class="fw-bold">New role</h2>
+														<!--end::Modal title-->
+														<!--begin::Close-->
+														<div id="kt_modal_add_customer_close"
+															class="btn btn-icon btn-sm btn-active-icon-primary">
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+															<span class="svg-icon svg-icon-1"> <svg width="24"
+																	height="24" viewBox="0 0 24 24" fill="none"
+																	xmlns="http://www.w3.org/2000/svg">
+																<rect opacity="0.5" x="6" y="17.3137" width="16"
+																		height="2" rx="1" transform="rotate(-45 6 17.3137)"
+																		fill="currentColor" />
+																<rect x="7.41422" y="6" width="16" height="2" rx="1"
+																		transform="rotate(45 7.41422 6)" fill="currentColor" />
+															</svg>
+															</span>
+															<!--end::Svg Icon-->
+														</div>
+														<!--end::Close-->
+													</div>
+													<!--end::Modal header-->
+													<!--begin::Modal body-->
+													<div class="modal-body py-10 px-lg-17">
+														<!--begin::Scroll-->
+														<div class="scroll-y me-n7 pe-7"
+															id="kt_modal_add_customer_scroll" data-kt-scroll="true"
+															data-kt-scroll-activate="{default: false, lg: true}"
+															data-kt-scroll-max-height="auto"
+															data-kt-scroll-dependencies="#kt_modal_add_customer_header"
+															data-kt-scroll-wrappers="#kt_modal_add_customer_scroll"
+															data-kt-scroll-offset="300px">
+															<!--begin::Input group-->
+															<div class="fv-row mb-7">
+																<!--begin::Label-->
+																<label class="required fs-6 fw-semibold mb-2">
+																	Role Name</label>
+																<!--end::Label-->
+																<!--begin::Input-->
+																<input type="text"
+																	class="form-control form-control-solid" placeholder=""
+																	name="name" value="" />
+																<!--end::Input-->
+															</div>
+
+															<div class="fv-row mb-7">
+																<!--begin::Label-->
+																<label class="required fs-6 fw-semibold mb-2">
+																	Description</label>
+																<!--end::Label-->
+																<!--begin::Input-->
+																<input type="text"
+																	class="form-control form-control-solid" placeholder=""
+																	name="description" value="" />
+																<!--end::Input-->
+															</div>
+															<!--end::Input group-->
+															<!--begin::Switch-->
+															<!--begin::Label-->
+
+
+															<!--end::Switch-->
+
+														</div>
+														<!--end::Scroll-->
+													</div>
+													<!--end::Modal body-->
+													<!--begin::Modal footer-->
+													<div class="modal-footer flex-center">
+														<!--begin::Button-->
+														<button type="reset" id="kt_modal_add_customer_cancel"
+															class="btn btn-light me-3">Discard</button>
+														<!--end::Button-->
+														<!--begin::Button-->
+														<button type="submit" id="kt_modal_add_customer_submit"
+															class="btn btn-primary">
+															<span class="indicator-label">Submit</span> <span
+																class="indicator-progress">Please wait... <span
+																class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+														</button>
+														<!--end::Button-->
+													</div>
+													<div th:if="${successMessage}" class="alert alert-success"
+														role="alert">
+														<span th:text="${successMessage}"></span>
+													</div>
+													<div th:if="${message}" class="alert alert-success"
+														role="alert">
+														<span th:text="${message}"></span>
+													</div>
+													<!--end::Modal footer-->
+												</form>
+												<!--end::Form-->
+											</div>
+										</div>
+									</div>
+									<!--end::Modal - Customers - Add-->
+									<!--begin::Modal - Export Customers-->
+									<div class="modal fade" id="kt_customers_export_modal"
+										tabindex="-1" aria-hidden="true">
+										<!--begin::Modal dialog-->
+										<div class="modal-dialog modal-dialog-centered mw-650px">
+											<!--begin::Modal content-->
+											<div class="modal-content">
+												<!--begin::Modal header-->
+												<div class="modal-header">
+													<!--begin::Modal title-->
+													<h2 class="fw-bold">Export Customers</h2>
+													<!--end::Modal title-->
+													<!--begin::Close-->
+													<div id="kt_customers_export_close"
+														class="btn btn-icon btn-sm btn-active-icon-primary">
+														<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+														<span class="svg-icon svg-icon-1"> <svg width="24"
+																height="24" viewBox="0 0 24 24" fill="none"
+																xmlns="http://www.w3.org/2000/svg">
+															<rect opacity="0.5" x="6" y="17.3137" width="16"
+																	height="2" rx="1" transform="rotate(-45 6 17.3137)"
+																	fill="currentColor" />
+															<rect x="7.41422" y="6" width="16" height="2" rx="1"
+																	transform="rotate(45 7.41422 6)" fill="currentColor" />
+														</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</div>
+													<!--end::Close-->
+												</div>
+												<!--end::Modal header-->
+												<!--begin::Modal body-->
+												<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+													<!--begin::Form-->
+													<form id="kt_customers_export_form" class="form"
+														th:action="@{/users/export}" method="post">
+														<!--begin::Input group-->
+														<div class="fv-row mb-10">
+															<!--begin::Label-->
+															<label class="fs-5 fw-semibold form-label mb-5">Select
+																Export Format:</label>
+															<!--end::Label-->
+															<!--begin::Input-->
+															<select data-control="select2"
+																data-placeholder="Select a format"
+																data-hide-search="true" name="format"
+																class="form-select form-select-solid">
+																<option value="excell">Excel</option>
+																<option value="pdf">PDF</option>
+																<option value="csv">CSV</option>
+															</select>
+															<!--end::Input-->
+														</div>
+														<!--end::Input group-->
+														<!--begin::Input group-->
+														<div class="fv-row mb-10">
+															<!--begin::Label-->
+															<label class="fs-5 fw-semibold form-label mb-5">Select
+																Date Range:</label>
+															<!--end::Label-->
+															<!--begin::Input-->
+															<input class="form-control form-control-solid"
+																placeholder="Pick a date" name="date" />
+															<!--end::Input-->
+														</div>
+														<!--end::Input group-->
+														<!--begin::Actions-->
+														<div class="text-center">
+															<button type="reset" id="kt_customers_export_cancel"
+																class="btn btn-light me-3">Discard</button>
+															<button type="submit" id="kt_customers_export_submit"
+																class="btn btn-primary">
+																<span class="indicator-label">Submit</span> <span
+																	class="indicator-progress">Please wait... <span
+																	class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+															</button>
+														</div>
+														<!--end::Actions-->
+													</form>
+													<!--end::Form-->
+												</div>
+												<!--end::Modal body-->
+											</div>
+											<!--end::Modal content-->
+										</div>
+										<!--end::Modal dialog-->
+									</div>
+									<!--end::Modal - Export Customers-->
+									<!--end::Modals-->
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
+						</div>
+						<!--end::Content wrapper-->
+						<!--begin::Footer-->
+						<div th:replace="fragments/footer :: footer">&nbsp;</div>
+						<!--end::Footer-->
+					</div>
+					<!--end:::Main-->
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+	</div>
+	<!--end::App-->
+	<!--begin::Scrolltop-->
+	<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+		<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+		<span class="svg-icon"> <svg width="24" height="24"
+				viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1"
+					transform="rotate(90 13 6)" fill="currentColor" />
+				<path
+					d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+					fill="currentColor" />
+			</svg>
+		</span>
+		<!--end::Svg Icon-->
+	</div>
+	<!--end::Scrolltop-->
+	<!--begin::Javascript-->
+	<div th:replace="fragments/partial :: global_script"></div>
+	<div th:replace="fragments/partial :: users_script"></div>
+	<!--end::Javascript-->
+</body>
+<!--end::Body-->
+
+</html>

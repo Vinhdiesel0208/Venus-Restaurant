@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Response from Venus Restaurant</title>
+</head>
+<body>
+    <p>Dear <b th:text="${name}">[Name]</b>,</p>
+    <p>We have received your message and here is our response:</p>
+    <p style="margin: 20px; background-color: #f0f0f0; padding: 10px;" th:text="${responseMessage}">[Response Message]</p>
+    <p>Thank you for contacting us.</p>
+    <p>With our warm regards,</p>
+    <p><i>Admin Vinh at Venus Restaurant</i></p>
+    <div style="margin-top: 30px;">
+    </div>
+</body>
+</html>

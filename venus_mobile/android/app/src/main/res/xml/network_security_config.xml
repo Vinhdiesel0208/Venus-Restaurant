@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.0.7</domain>
+        <domain includeSubdomains="true">172.20.10.2</domain>
+        
+        <!-- Bạn có thể thêm các domain khác nếu cần -->
+    </domain-config>
+</network-security-config>

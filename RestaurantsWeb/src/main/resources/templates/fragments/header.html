@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body class="stretched">
+	<!-- Top Bar
+		============================================= -->
+
+	<!-- Header
+		============================================= -->
+	<header th:fragment="header">
+		<div class="py-1 bg-black top">
+			<div class="container">
+				<div
+					class="row no-gutters d-flex align-items-start align-items-center px-md-0">
+					<div class="col-lg-12 d-block">
+						<div class="row d-flex">
+							<div class="col-md pr-4 d-flex topper align-items-center">
+								<div
+									class="icon mr-2 d-flex justify-content-center align-items-center">
+									<span class="icon-phone2"></span>
+								</div>
+								<span class="text">0909123456</span>
+							</div>
+							<div class="col-md pr-4 d-flex topper align-items-center">
+								<div
+									class="icon mr-2 d-flex justify-content-center align-items-center">
+									<span class="icon-paper-plane"></span>
+								</div>
+								<span class="text">venusrestaurant@email.com</span>
+							</div>
+							<div
+								class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right justify-content-end">
+								<p class="mb-0 register-link">
+									<span>Open hours:</span> <span>Monday - Sunday</span> <span>8:00AM
+										- 9:00PM</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav
+			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+			id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" th:href="@{/}" title="Home">Venus
+					Restaurant</a>
+
+
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active"><a th:href="@{/}"
+							class="nav-link">Home</a></li>
+						<li class="nav-item"><a th:href="@{/about}" class="nav-link">About</a></li>
+						<li class="nav-item"><a th:href="@{/menu-client}"
+							class="nav-link">Menu</a></li>
+						<!-- <li class="nav-item"><a th:href="@{/table}" class="nav-link">Table</a></li> -->
+						<li class="nav-item" sec:authorize="hasAuthority('STAFF')"><a
+							th:href="@{/table}" class="nav-link">Table</a></li>
+
+						<!-- <th:block sec:authorize="hasAuthority('STAFF')">
+							<li class="nav-item"><a th:href="@{/table}" class="nav-link">Table</a></li>
+						</th:block>  -->
+
+
+
+						<li class="nav-item"><a href="blog" class="nav-link">Stories</a></li>
+						<li class="nav-item"><a href="contact" class="nav-link">Contact</a></li>
+						<li class="nav-item cta"><a th:href="@{/booktable/add}"
+							class="nav-link">Booking</a></li>
+
+
+
+
+
+						<li class="nav-item "><a th:href="@{/user_detail}"
+							class="nav-link"
+							th:if="${#authorization.expression('isAuthenticated()')}"
+							th:text="'Hello ' + ${#authentication.principal.getFullname()}"></a>
+						</li>
+
+						<!-- Ẩn nút Login khi đã đăng nhập -->
+						<th:block
+							th:unless="${#authorization.expression('isAuthenticated()')}">
+							<li class="nav-item"><a href="login" class="nav-link">Login</a>
+							</li>
+						</th:block>
+
+						<th:block
+							th:if="${#authorization.expression('isAuthenticated()')}">
+							<li class="nav-item"><a
+								href="javascript: document.logoutForm.submit()" class="nav-link">Logout</a>
+							</li>
+						</th:block>
+
+						<!-- Form logout ẩn -->
+						<form th:action="@{/logout}" method="post" th:hidden="true"
+							name="logoutForm">
+							<input type="submit" class="menu-link px-5" value="Sign Out" />
+						</form>
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!-- #header end -->
+</body>

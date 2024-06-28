@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Venus Restaurant - Menu</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/assets/css/magnific-popup.css">
+<link rel="stylesheet" href="/assets/css/aos.css">
+<link rel="stylesheet" href="/assets/css/ionicons.min.css">
+<link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+<link rel="stylesheet" href="/assets/css/flaticon.css">
+<link rel="stylesheet" href="/assets/css/icomoon.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/jquery.min.js"></script>
+<style>
+/* General styles for the results container */
+#menuResults {
+	width: 100%;
+	margin-top: 20px;
+	display: none;
+}
+
+/* Improve the look of the description */
+.menus p {
+	color: #666;
+	line-height: 1.5;
+}
+
+.menu-img:hover {
+	animation: bounce 1s;
+}
+
+/* Search section styles */
+.search-section {
+	padding: 30px 0;
+	background-color: #f8f9fa;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.search-section .form-control, .search-section .btn-primary {
+	height: calc(2.5rem + 2px);
+	font-size: 1rem;
+}
+
+.hero-wrap-2 .heading-section {
+	margin-bottom: 0;
+}
+
+.hero-wrap-2 .heading-section h2 {
+	color: #fff;
+}
+
+.nav-link-wrap .nav-link {
+	margin: 0 10px;
+	font-size: 18px;
+}
+
+.price {
+	color: #d4af37;
+	font-size: 1.5rem;
+	font-weight: bold;
+	background-color: #fff8e1;
+	padding: 5px 10px;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #cd3131 !important;
+    color: white !important; /* Màu chữ khi active */
+    border-color: #cd3131 !important;
+}
+
+.nav-pills .nav-link {
+    background-color: #fff !important;
+    border: 2px solid #cd3131 !important;
+    color: #cd3131 !important;
+    margin-right: 10px;
+    border-radius: 50px !important;
+    padding: 10px 20px !important;  /* Adjust padding for better coverage */
+    font-weight: bold !important;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px; /* Đảm bảo khung có đủ chiều rộng để bao quanh chữ */
+    text-align: center;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #000 !important; /* Màu đen */
+    color: #ffdd99 !important; /* Màu vàng */
+    border-color: #000 !important;
+}
+
+.nav-pills .nav-link:not(.active):hover {
+    color: #ffdd99 !important;
+}
+
+.cat-pricing-list {
+	display: flex;
+	align-items: center;
+	border: 1px solid #e9ecef;
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s, color 0.3s;
+}
+
+.cat-pri-icon img {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.cat-price-info {
+	flex: 1;
+}
+
+.cat-pricing-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 5px;
+}
+
+.cat-pricing-title h4:hover {
+	color: #ff5a5f;
+	cursor: pointer;
+}
+</style>
+</head>
+
+<body class="stretched">
+	<div class="py-1 bg-black top">
+		<div class="container">
+			<div
+				class="row no-gutters d-flex align-items-start align-items-center px-md-0">
+				<div class="col-lg-12 d-block">
+					<div class="row d-flex">
+						<div class="col-md pr-4 d-flex topper align-items-center">
+							<div
+								class="icon mr-2 d-flex justify-content-center align-items-center">
+								<span class="icon-phone2"></span>
+							</div>
+							
+						</div>
+						<div class="col-md pr-4 d-flex topper align-items-center">
+							<div
+								class="icon mr-2 d-flex justify-content-center align-items-center">
+								<span class="icon-paper-plane"></span>
+							</div>
+							
+						</div>
+						<div
+							class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right justify-content-end">
+							<p class="mb-0 register-link">
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- END nav -->
+
+	<!-- Document Wrapper -->
+	<div id="wrapper">
+		<header th:replace="fragments/header :: header"></header>
+		<section class="hero-wrap hero-wrap-2"
+			style="background-image: url('/assets/images/bg_3.jpg');"
+			data-stellar-background-ratio="0.5">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text align-items-end justify-content-center">
+					<div class="col-md-12 text-center heading-section ftco-animate">
+						<span class="subheading">Specialties</span>
+						<h2 class="mb-3">Our Menu</h2>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Search bar and dropdown -->
+		<section class="search-section">
+			<div class="container">
+				<div class="row justify-content-center mb-4">
+					<div class="col-md-6">
+						<input type="text" id="menuSearch" class="form-control"
+							placeholder="Search by dish name...">
+					</div>
+					<div class="col-md-2">
+						<button id="searchButton" class="btn btn-primary btn-block">Search</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Search/Filter results -->
+		<section>
+			<div class="container">
+				<div id="menuResults"
+					class="row no-gutters d-flex align-items-stretch">
+					<!-- Search results will be appended here by jQuery -->
+				</div>
+			</div>
+		</section>
+
+		<!-- Category Filter Section -->
+		<section class="ftco-section">
+			<div class="container">
+				<div class="ftco-search">
+					<div class="row">
+						<div class="col-md-12 nav-link-wrap">
+							<ul class="nav nav-pills d-flex justify-content-center mb-4"
+								id="v-pills-tab" role="tablist" aria-orientation="horizontal">
+								<li class="nav-item" th:each="cat, status : ${listCate}"
+									role="presentation">
+									<button th:id="'v-pills-' + ${cat.categoryName + '-tab'}"
+										class="nav-link ftco-animate" data-toggle="pill"
+										th:data-bs-target="'#v-pills-' + ${cat.categoryName}"
+										type="button" role="tab"
+										th:aria-controls="'v-pills-' + ${cat.categoryName}"
+										th:aria-selected="${status.index == 0}"
+										th:text="${cat.categoryName}"
+										th:classappend="${status.index == 0} ? 'active' : ''">Category
+										Name</button>
+								</li>
+							</ul>
+
+
+
+						</div>
+						<div class="col-md-12 tab-wrap">
+							<div class="tab-content" id="v-pills-tabContent">
+								<div th:each="cat, status : ${listCate}"
+									th:id="'v-pills-' + ${cat.categoryName}" class="tab-pane fade"
+									role="tabpanel"
+									th:aria-labelledby="'v-pills-' + ${cat.categoryName + '-tab'}"
+									th:classappend="${status.index == 0} ?                                 'active show' : ''">
+									<div class="row">
+										<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12"
+											th:each="ing, ingIndex : ${listIng}"
+											th:if="${ing.category.categoryName == cat.categoryName}">
+											<div class="cat-pricing-list">
+												<span class="cat-pri-icon"> <img
+													th:src="'http://localhost:8082/files/' + ${ing.photo}"
+													alt="" />
+												</span>
+												<div class="cat-price-info">
+													<div class="cat-pricing-title">
+														<h4 th:text="${ing.ingredientName}"></h4>
+														<span class="price" th:text="'$' + ${ing.price}"></span>
+													</div>
+													<p th:text="${ing.description}"></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Add more tabs and content for other categories -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer th:replace="fragments/footer :: footer"></footer>
+	</div>
+
+	<!-- #wrapper end -->
+	<!-- Go To Top -->
+	<div id="gotoTop" class="bi-arrow-up"></div>
+	<!-- JavaScripts -->
+	<div th:replace="fragments/partial :: page_script"></div>
+	<script>
+        $(document).ready(function () {
+            function searchIngredients(keyword) {
+                if (keyword.length > 0) {
+                    $.ajax({
+                        url: 'http://localhost:8082/apis/v1/ingredients/search',
+                        type: 'GET',
+                        data: { keyword: keyword },
+                        success: function (response) {
+                            var resultsHtml = '';
+                            if (response.length > 0) {
+                                response.forEach(function (ingredient) {
+                                    var imageUrl;
+                                    if (ingredient.photo.startsWith('http')) {
+                                        imageUrl = ingredient.photo;
+                                    } else if (ingredient.photo.startsWith('/')) {
+                                        imageUrl = 'http://localhost:8082/files' + ingredient.photo;
+                                    } else {
+                                        imageUrl = 'data:image/png;base64,' + ingredient.photo;
+                                    }
+                                    resultsHtml += `
+                                        <div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+                                            <div class="menus d-sm-flex align-items-stretch">
+                                                <div class="menu-img img" style="background-image: url('${imageUrl}');"></div>
+                                                <div class="text d-flex align-items-center">
+                                                    <div>
+                                                        <div class="d-flex">
+                                                            <div class="one-half">
+                                                                <h3>${ingredient.ingredientName}</h3>
+                                                            </div>
+                                                            <div class="one-forth">
+                                                                <span class="price">$${ingredient.price.toFixed(2)}</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>${ingredient.description}</p>
+                                                        <p><span class="price">${ingredient.categoryName}</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                });
+                                $('#menuResults').html(resultsHtml).show();
+                            } else {
+                                $('#menuResults').html('<p>No dishes found.</p>').show();
+                                Toastify({
+                                    text: "No dishes found.",
+                                    duration: 3000,
+                                    close: true,
+                                    gravity: "top",
+                                    position: 'center',
+                                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                                }).showToast();
+                            }
+                        },
+                        error: function () {
+                            alert('Error occurred while searching. Please try again.');
+                        }
+                    });
+                } else {
+                    $('#menuResults').html('').hide();
+                }
+            }
+
+            $('#searchButton').on('click', function () {
+                var keyword = $('#menuSearch').val().trim();
+                searchIngredients(keyword);
+            });
+
+            $('#menuSearch').on('input', function () {
+                var keyword = $(this).val().trim();
+                searchIngredients(keyword);
+            });
+
+            $('#menuSearch').on('keypress', function (e) {
+                if (e.which === 13) {
+                    e.preventDefault();
+                    var keyword = $(this).val().trim();
+                    searchIngredients(keyword);
+                }
+            });
+
+            $('.nav-link').on('click', function () {
+                $('.nav-link').removeClass('active');
+                $(this).addClass('active');
+                var targetTab = $(this).data('bs-target');
+                $('.tab-pane').removeClass('active show');
+                $(targetTab).addClass('active show');
+            });
+        });
+    </script>
+</body>
+
+</html>
+

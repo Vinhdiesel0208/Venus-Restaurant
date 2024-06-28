@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[Venus Restaurant]_Admin Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+        }
+        .header {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        .footer {
+            padding: 10px;
+            background-color: #eeeeee;
+            text-align: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>New Contact Message</h2>
+        </div>
+        <div class="content">
+            <p>Hello Admin Vinh,</p>
+            <p>You have received a new contact message from <b th:text="${name}">[Name]</b>:</p>
+            <blockquote th:text="${message}">[Message]</blockquote>
+            <p>Contact Details:</p>
+            <ul>
+                <li>Email: <a th:href="'mailto:' + ${email}" th:text="${email}">[Email]</a></li>
+                <li>Phone: <span th:text="${phone}">[Phone]</span></li>
+            </ul>
+            <p>Please respond to the message promptly.</p>
+        </div>
+        <div class="footer">
+            &copy; <span th:text="${#dates.year(new java.util.Date())}">2023</span> Venus Restaurant. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

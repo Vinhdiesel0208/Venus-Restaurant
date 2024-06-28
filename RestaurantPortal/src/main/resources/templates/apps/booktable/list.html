@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--begin::Head-->
+
+<head
+	th:replace="fragments/partial :: page_head('Reservation List', 'none')" />
+<!--end::Head-->
+<!--begin::Body-->
+
+<body data-kt-name="metronic" id="kt_app_body"
+	data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
+	data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
+	data-kt-app-sidebar-hoverable="true"
+	data-kt-app-sidebar-push-header="true"
+	data-kt-app-sidebar-push-toolbar="true"
+	data-kt-app-sidebar-push-footer="true"
+	data-kt-app-toolbar-enabled="true" class="app-default">
+	<!--begin::Theme mode setup on page load-->
+	<script>
+		if (document.documentElement) {
+			const defaultThemeMode = "system";
+			const name = document.body.getAttribute("data-kt-name");
+			let themeMode = localStorage.getItem("kt_"
+					+ (name !== null ? name + "_" : "") + "theme_mode_value");
+			if (themeMode === null) {
+				if (defaultThemeMode === "system") {
+					themeMode = window
+							.matchMedia("(prefers-color-scheme: dark)").matches ? "dark"
+							: "light";
+				} else {
+					themeMode = defaultThemeMode;
+				}
+			}
+			document.documentElement.setAttribute("data-theme", themeMode);
+		}
+	</script>
+	<!--end::Theme mode setup on page load-->
+	<!--begin::App-->
+	<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+		<!--begin::Page-->
+		<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+			<div th:replace="fragments/header :: header">&nbsp;</div>
+			<!--begin::Wrapper-->
+			<div class="app-wrapper flex-column flex-row-fluid"
+				id="kt_app_wrapper">
+				<div th:replace="fragments/sidebar :: sidebar"></div>
+				<!--begin::Main-->
+				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+					<!--begin::Content wrapper-->
+					<div class="d-flex flex-column flex-column-fluid">
+						<!--begin::Toolbar-->
+						<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+							<!--begin::Toolbar container-->
+							<div id="kt_app_toolbar_container"
+								class="app-container container-xxl d-flex flex-stack">
+								<!--begin::Page title-->
+								<div
+									class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+									<!--begin::Title-->
+									<h1
+										class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+										Reservation List</h1>
+									<!--end::Title-->
+									<!--begin::Breadcrumb-->
+
+									<!--end::Breadcrumb-->
+								</div>
+								<!--end::Page title-->
+							</div>
+							<!--end::Toolbar container-->
+						</div>
+						<!--end::Toolbar-->
+						<!--begin::Content-->
+						<div id="kt_app_content" class="app-content flex-column-fluid">
+							<!--begin::Content container-->
+							<div id="kt_app_content_container"
+								class="app-container container-xxl">
+								<!--begin::Card-->
+								<div class="card">
+									<!--begin::Card header-->
+									<div class="card-header border-0 pt-6">
+
+										<!--begin::Card title-->
+										<div class="card-title">
+											<!--begin::Search-->
+											<div class="d-flex align-items-center position-relative my-1">
+												<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+
+												<!--end::Svg Icon-->
+
+
+											</div>
+											<!--end::Search-->
+										</div>
+										<!--begin::Card title-->
+										<!--begin::Card toolbar-->
+										<div class="card-toolbar">
+											<!--begin::Toolbar-->
+											<div class="d-flex justify-content-end"
+												data-kt-customer-table-toolbar="base">
+
+												<!--end::Export-->
+												<!--begin::Add customer-->
+												<!--<button type="button" class="btn btn-primary"
+													data-bs-toggle="modal"
+													data-bs-target="#kt_modal_add_customer">Add Role</button>-->
+												<!--end::Add customer-->
+											</div>
+											<!--end::Toolbar-->
+											<!--begin::Group actions-->
+											<div
+												class="d-flex justify-content-end align-items-center d-none"
+												data-kt-customer-table-toolbar="selected">
+												<div class="fw-bold me-5">
+													<span class="me-2"
+														data-kt-customer-table-select="selected_count"></span>Selected
+												</div>
+												<button type="button" class="btn btn-danger"
+													data-kt-customer-table-select="delete_selected">
+													Delete Selected</button>
+											</div>
+											<!--end::Group actions-->
+										</div>
+										<!--end::Card toolbar-->
+									</div>
+									<!--end::Card header-->
+									<!--begin::Card body-->
+									<div class="card-body pt-0">
+										<form class="form-inline justify-content-center"
+											th:action="@{/reservation/search}" method="get"
+											th:object="${bookingTable}">
+											<div class="row">
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="name">Name:</label> <input type="text"
+															id="name" name="name" class="form-control"
+															th:field="*{name}">
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="date">Date:</label> <input type="date"
+															id="date" name="date" class="form-control"
+															th:field="*{date}">
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="time">Start Time:</label> <select
+															th:field="*{start_time}" name="start_time"
+															class="form-control">
+															<option value="">Time</option>
+															<option value="09:00">09:00</option>
+															<option value="10:00">10:00</option>
+															<option value="11:00">11:00</option>
+															<option value="12:00">12:00</option>
+															<option value="13:00">13:00</option>
+															<option value="14:00">14:00</option>
+															<option value="15:00">15:00</option>
+															<option value="16:00">16:00</option>
+															<option value="17:00">17:00</option>
+															<option value="18:00">18:00</option>
+															<option value="19:00">19:00</option>
+															<option value="20:00">20:00</option>
+															<option value="21:00">21:00</option>
+
+														</select>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="time">End Time:</label> <select
+															th:field="*{end_time}" name="end_time"
+															class="form-control">
+															<option value="">Time</option>
+															<option value="09:00">09:00</option>
+															<option value="10:00">10:00</option>
+															<option value="11:00">11:00</option>
+															<option value="12:00">12:00</option>
+															<option value="13:00">13:00</option>
+															<option value="14:00">14:00</option>
+															<option value="15:00">15:00</option>
+															<option value="16:00">16:00</option>
+															<option value="17:00">17:00</option>
+															<option value="18:00">18:00</option>
+															<option value="19:00">19:00</option>
+															<option value="20:00">20:00</option>
+															<option value="21:00">21:00</option>
+
+														</select>
+													</div>
+
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="phone_number">Phone Number:</label> <input
+															type="text" id="phone_number" name="phone_number"
+															class="form-control" th:field="*{phone_number}">
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="phoneNumber">Gmail:</label> <input type="text"
+															id="email" name="email" class="form-control"
+															th:field="*{email}">
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="personNumber">Person Number:</label> <select
+															th:field="*{person_number}" name="person_number"
+															class="form-control">
+															<option value="">Person</option>
+															<option th:value="2">2</option>
+															<option th:value="3">3</option>
+															<option th:value="4">4</option>
+															<option th:value="5">5</option>
+															<option th:value="6">6</option>
+															<option th:value="8">8</option>
+														</select>
+													</div>
+												</div>
+												<!--	<div class="col-md-3">
+													<div class="form-group">
+														<label for="status">Status:</label> <select
+															th:field="*{status}" name="status" class="form-control">
+															<option value="">----Select----</option>
+															<option value="0">Not approved yet</option>
+															<option value="1">Approved</option>
+															<option value="2">Refuse</option>
+														</select>
+													</div>
+												</div>-->
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group"></div>
+												</div>
+
+												<div class="col-md-6 mx-auto">
+													<div class="form-group">
+														<button type="reset" class="btn btn-secondary">Reset</button>
+														<button type="submit" class="btn btn-primary">Search</button>
+													</div>
+												</div>
+											</div>
+										</form>
+										<div th:if="${successMessage}" class="alert alert-success"
+											role="alert" style="font-size: 1.2em;">
+											<span th:text="${successMessage}"></span>
+										</div>
+
+										<div th:if="${message}" class="alert alert-warning"
+											role="alert" style="font-size: 1.2em;">
+											<span th:text="${message}"></span>
+										</div>
+										<!--begin::Table-->
+										<table class="table align-middle table-row-dashed fs-6 gy-5"
+											id="kt_customers_table_skip">
+											<!--begin::Table head-->
+											<thead>
+												<!--begin::Table row-->
+												<tr
+													class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+													<th class="w-10px pe-2">
+														<div
+															class="form-check form-check-sm form-check-custom form-check-solid me-3">
+															<input class="form-check-input" type="checkbox"
+																data-kt-check="true"
+																data-kt-check-target="#kt_customers_table .form-check-input"
+																value="1" />
+														</div>
+													</th>
+													<th
+														th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+														<a
+														th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">
+															Name</a>
+													</th>
+													<th
+														th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+														<a
+														th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">Gmail
+													</a>
+													</th>
+													<th
+														th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+														<a
+														th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">Phone</a>
+													</th>
+													<th
+														th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+														<a
+														th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">Date</a>
+													</th>
+
+													<th
+														th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+														<a
+														th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">Start
+															Time</a>
+													</th>
+													<th
+														th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+														<a
+														th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">End
+															Time</a>
+													</th>
+													<th
+														th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+														<a
+														th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">Person</a>
+													</th>
+													<!--<th
+														th:class="${sortField != 'name' ? 'min-w-125px' : (sortDir == 'asc' ? 'min-w-125px sorting_asc' :  'min-w-125px sorting_desc')}">
+														<a
+														th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=name' +'&sortDir=' + ${sortField != 'name' ? sortDir : reverseSortDir} + ${searchText != null && searchText != '' ? '&searchText=' + searchText : ''}}">Status</a>
+													</th>
+											
+
+													<th class="text-end min-w-70px">Actions</th>-->
+												</tr>
+												<!--end::Table row-->
+											</thead>
+											<!--end::Table head-->
+											<!--begin::Table body-->
+											<tbody class="fw-semibold text-gray-600">
+
+												<tr th:each="item : ${reList}">
+
+													<!--begin::Checkbox-->
+													<td>
+														<div
+															class="form-check form-check-sm form-check-custom form-check-solid">
+															<input class="form-check-input" type="checkbox" value="1" />
+														</div>
+													</td>
+													<!--end::Checkbox-->
+													<!--begin::Role Name=-->
+													<td th:text="${item.name}"></td>
+													<td th:text="${item.email}"></td>
+													<td th:text="${item.phone_number}">-</td>
+													<td th:text="${item.date}"></td>
+													<td th:text="${item.start_time}"></td>
+													<td th:text="${item.end_time}"></td>
+													<td th:text="${item.person_number}"></td>
+
+													<!--<td><span th:if="${item.status == 0}"
+														th:class="${'text-success'}">Not approved yet</span> <span
+														th:if="${item.status == 1}" th:class="${'text-warning'}">Approved</span>
+														<span th:if="${item.status == 2}"
+														th:class="${'text-danger'}">Refuse</span></td>
+
+													<td class="text-end"><a href="#"
+														class="btn btn-sm btn-light btn-active-light-primary"
+														data-kt-menu-trigger="click"
+														data-kt-menu-placement="bottom-end">Actions <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+												
+													<!--end::Action=-->
+												</tr>
+											</tbody>
+											<!--end::Table body-->
+										</table>
+										<!--end::Table-->
+										<!--begin::Paginate-->
+										<div th:if="${totalPages > 1}">
+											<ul class="pagination">
+												<li
+													th:class="${currentPage > 1 ? 'page-item previous' : 'page-item previous disabled'}">
+													<a
+													th:href="@{${moduleURL} + '/page/' + ${currentPage - 1} + ${queryParams}}"
+													class="page-link"><i class="previous"></i></a>
+												</li>
+												<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+													th:class="${currentPage != i ? 'page-item' : 'page-item active'}">
+													<a
+													th:href="@{${moduleURL} + '/page/' + ${i} + ${queryParams}}"
+													class="page-link" th:text="${i}"></a>
+												</li>
+												<li
+													th:class="${currentPage < totalPages ? 'page-item next' : 'page-item next disabled' }">
+													<a
+													th:href="@{${moduleURL} + '/page/' + ${currentPage + 1} + ${queryParams}}"
+													class="page-link"><i class="next"></i></a>
+												</li>
+											</ul>
+										</div>
+										<!--end::Paginate-->
+
+									</div>
+									<!--end::Card body-->
+
+									<!--end::Card-->
+									<!--begin::Modals-->
+									<!--begin::Modal - User - Add-->
+									<div class="modal fade" id="kt_modal_add_customer"
+										tabindex="-1" aria-hidden="true">
+										<!--begin::Modal dialog-->
+										<div class="modal-dialog modal-dialog-centered mw-650px">
+											<!--begin::Modal content-->
+											<div class="modal-content">
+												<!--begin::Form Trung3T-->
+												<form class="form" th:action="@{roles/add}"
+													id="kt_modal_add_customer_form" data-kt-redirect="users"
+													method="post">
+													<!--begin::Modal header-->
+													<div class="modal-header" id="kt_modal_add_customer_header">
+														<!--begin::Modal title-->
+														<h2 class="fw-bold">New role</h2>
+														<!--end::Modal title-->
+														<!--begin::Close-->
+														<div id="kt_modal_add_customer_close"
+															class="btn btn-icon btn-sm btn-active-icon-primary">
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+															<span class="svg-icon svg-icon-1"> <svg width="24"
+																	height="24" viewBox="0 0 24 24" fill="none"
+																	xmlns="http://www.w3.org/2000/svg">
+																<rect opacity="0.5" x="6" y="17.3137" width="16"
+																		height="2" rx="1" transform="rotate(-45 6 17.3137)"
+																		fill="currentColor" />
+																<rect x="7.41422" y="6" width="16" height="2" rx="1"
+																		transform="rotate(45 7.41422 6)" fill="currentColor" />
+															</svg>
+															</span>
+															<!--end::Svg Icon-->
+														</div>
+														<!--end::Close-->
+													</div>
+													<!--end::Modal header-->
+													<!--begin::Modal body-->
+													<div class="modal-body py-10 px-lg-17">
+														<!--begin::Scroll-->
+														<div class="scroll-y me-n7 pe-7"
+															id="kt_modal_add_customer_scroll" data-kt-scroll="true"
+															data-kt-scroll-activate="{default: false, lg: true}"
+															data-kt-scroll-max-height="auto"
+															data-kt-scroll-dependencies="#kt_modal_add_customer_header"
+															data-kt-scroll-wrappers="#kt_modal_add_customer_scroll"
+															data-kt-scroll-offset="300px">
+															<!--begin::Input group-->
+															<div class="fv-row mb-7">
+																<!--begin::Label-->
+																<label class="required fs-6 fw-semibold mb-2">
+																	Role Name</label>
+																<!--end::Label-->
+																<!--begin::Input-->
+																<input type="text"
+																	class="form-control form-control-solid" placeholder=""
+																	name="name" value="" />
+																<!--end::Input-->
+															</div>
+
+															<div class="fv-row mb-7">
+																<!--begin::Label-->
+																<label class="required fs-6 fw-semibold mb-2">
+																	Description</label>
+																<!--end::Label-->
+																<!--begin::Input-->
+																<input type="text"
+																	class="form-control form-control-solid" placeholder=""
+																	name="description" value="" />
+																<!--end::Input-->
+															</div>
+															<!--end::Input group-->
+															<!--begin::Switch-->
+															<!--begin::Label-->
+
+
+															<!--end::Switch-->
+
+														</div>
+														<!--end::Scroll-->
+													</div>
+													<!--end::Modal body-->
+													<!--begin::Modal footer-->
+													<div class="modal-footer flex-center">
+														<!--begin::Button-->
+														<button type="reset" id="kt_modal_add_customer_cancel"
+															class="btn btn-light me-3">Discard</button>
+														<!--end::Button-->
+														<!--begin::Button-->
+														<button type="submit" id="kt_modal_add_customer_submit"
+															class="btn btn-primary">
+															<span class="indicator-label">Submit</span> <span
+																class="indicator-progress">Please wait... <span
+																class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+														</button>
+														<!--end::Button-->
+													</div>
+													<div th:if="${successMessage}" class="alert alert-success"
+														role="alert">
+														<span th:text="${successMessage}"></span>
+													</div>
+													<div th:if="${message}" class="alert alert-success"
+														role="alert">
+														<span th:text="${message}"></span>
+													</div>
+													<!--end::Modal footer-->
+												</form>
+												<!--end::Form-->
+											</div>
+										</div>
+									</div>
+									<!--end::Modal - Customers - Add-->
+									<!--begin::Modal - Export Customers-->
+									<div class="modal fade" id="kt_customers_export_modal"
+										tabindex="-1" aria-hidden="true">
+										<!--begin::Modal dialog-->
+										<div class="modal-dialog modal-dialog-centered mw-650px">
+											<!--begin::Modal content-->
+											<div class="modal-content">
+												<!--begin::Modal header-->
+												<div class="modal-header">
+													<!--begin::Modal title-->
+													<h2 class="fw-bold">Export Customers</h2>
+													<!--end::Modal title-->
+													<!--begin::Close-->
+													<div id="kt_customers_export_close"
+														class="btn btn-icon btn-sm btn-active-icon-primary">
+														<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+														<span class="svg-icon svg-icon-1"> <svg width="24"
+																height="24" viewBox="0 0 24 24" fill="none"
+																xmlns="http://www.w3.org/2000/svg">
+															<rect opacity="0.5" x="6" y="17.3137" width="16"
+																	height="2" rx="1" transform="rotate(-45 6 17.3137)"
+																	fill="currentColor" />
+															<rect x="7.41422" y="6" width="16" height="2" rx="1"
+																	transform="rotate(45 7.41422 6)" fill="currentColor" />
+														</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</div>
+													<!--end::Close-->
+												</div>
+												<!--end::Modal header-->
+												<!--begin::Modal body-->
+												<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+													<!--begin::Form-->
+													<form id="kt_customers_export_form" class="form"
+														th:action="@{/users/export}" method="post">
+														<!--begin::Input group-->
+														<div class="fv-row mb-10">
+															<!--begin::Label-->
+															<label class="fs-5 fw-semibold form-label mb-5">Select
+																Export Format:</label>
+															<!--end::Label-->
+															<!--begin::Input-->
+															<select data-control="select2"
+																data-placeholder="Select a format"
+																data-hide-search="true" name="format"
+																class="form-select form-select-solid">
+																<option value="excell">Excel</option>
+																<option value="pdf">PDF</option>
+																<option value="csv">CSV</option>
+															</select>
+															<!--end::Input-->
+														</div>
+														<!--end::Input group-->
+														<!--begin::Input group-->
+														<div class="fv-row mb-10">
+															<!--begin::Label-->
+															<label class="fs-5 fw-semibold form-label mb-5">Select
+																Date Range:</label>
+															<!--end::Label-->
+															<!--begin::Input-->
+															<input class="form-control form-control-solid"
+																placeholder="Pick a date" name="date" />
+															<!--end::Input-->
+														</div>
+														<!--end::Input group-->
+														<!--begin::Actions-->
+														<div class="text-center">
+															<button type="reset" id="kt_customers_export_cancel"
+																class="btn btn-light me-3">Discard</button>
+															<button type="submit" id="kt_customers_export_submit"
+																class="btn btn-primary">
+																<span class="indicator-label">Submit</span> <span
+																	class="indicator-progress">Please wait... <span
+																	class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+															</button>
+														</div>
+														<!--end::Actions-->
+													</form>
+													<!--end::Form-->
+												</div>
+												<!--end::Modal body-->
+											</div>
+											<!--end::Modal content-->
+										</div>
+										<!--end::Modal dialog-->
+									</div>
+									<!--end::Modal - Export Customers-->
+									<!--end::Modals-->
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
+						</div>
+						<!--end::Content wrapper-->
+						<!--begin::Footer-->
+						<div th:replace="fragments/footer :: footer">&nbsp;</div>
+						<!--end::Footer-->
+					</div>
+					<!--end:::Main-->
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		</div>
+		<!--begin::Scrolltop-->
+		<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+			<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+			<span class="svg-icon"> <svg width="24" height="24"
+					viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1"
+						transform="rotate(90 13 6)" fill="currentColor" />
+				<path
+						d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+						fill="currentColor" />
+			</svg>
+			</span>
+			<!--end::Svg Icon-->
+		</div>
+		<!--end::Scrolltop-->
+		<!--begin::Javascript-->
+		<div th:replace="fragments/partial :: global_script"></div>
+		<div th:replace="fragments/partial :: users_script"></div>
+		<!--end::Javascript-->
+</body>
+<!--end::Body-->
+
+</html>

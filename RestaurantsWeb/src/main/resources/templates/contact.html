@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vinh Diesel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="assets/css/aos.css">
+
+    <link rel="stylesheet" href="assets/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="assets/css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/icomoon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+</head>
+<body>
+    <div class="py-1 bg-black top">
+        <div class="container">
+            <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
+                <div class="col-lg-12 d-block">
+                    <div class="row d-flex">
+                        <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right justify-content-end">
+                            <p class="mb-0 register-link">
+                                <span>Open hours:</span> <span>Monday - Sunday</span> <span>8:00AM - 9:00PM</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<header th:replace="fragments/header :: header"></header>
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('assets/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-center">
+                <div class="col-md-9 ftco-animate text-center mb-4">
+                    <h1 class="mb-2 bread">Contact</h1>
+                    <p class="breadcrumbs">
+                        <span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact us <i class="ion-ios-arrow-forward"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+        <div class="container">
+            <div class="row d-flex align-items-stretch no-gutters">
+                <div class="col-md-6 pt-5 px-2 pb-2 p-md-5 order-md-last">
+                    <h2 class="h4 mb-2 mb-md-5 font-weight-bold">Contact Us</h2>
+                    <form id="contactForm" action="#" th:action="@{/contact}" th:object="${contact}" method="post" onsubmit="return onSubmit(event)">
+
+                        <div class="form-group">
+                            <input type="text" id="fullName" th:field="*{fullName}" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" th:field="*{phone}" class="form-control" placeholder="Your Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" th:field="*{message}" class="form-control" rows="7" placeholder="Message" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6LfFmbkpAAAAAETy4ftUnFNnmh6wQGI3AuEfZdTD"></div>
+                            <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+                        </div>
+                    </form>
+                    <!-- Thông báo gửi tin nhắn thành công -->
+                    <div th:if="${message}">
+                        <div class="alert alert-success" role="alert" th:text="${message}">Your message successfully sent</div>
+                    </div>
+                    <!-- Thêm thông báo lỗi Captcha -->
+                    <div th:if="${errorMessage}">
+                        <div id="errorMessage" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch">
+                    <!-- Thay thế phần hiển thị bản đồ Google Maps API bằng iframe -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3225708599463!2d106.6704762142761!3d10.784181492316196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752fe3da504d0f%3A0xa021c45f81d5a1e4!2s590%20C%C3%A1ch%20M%E1%BA%A1ng%20Th%C3%A1ng%208%2C%20Ph%C6%B0%E1%BB%9Dng%2011%2C%20Qu%E1%BA%ADn%203%2C%20Th%C3%A0nh%20ph%E1%BB%91%20H%E1%BB%93%20Ch%C3%AD%20Minh%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1sen!2s!4v1647707465661!5m2!1sen!2s" width="100%" height="500" style="border: 0; min-height: 300px;" allowfullscreen="" loading="lazy"></iframe>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section contact-section">
+        <div class="container">
+            <div class="row d-flex contact-info">
+                <div class="col-md-12 mb-4">
+                    <h2 class="h4 font-weight-bold">Contact Information</h2>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-md-3 d-flex">
+                    <div class="dbox">
+                        <p><span>Address:</span> 590 CMT8</p>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex">
+                    <div class="dbox">
+                        <p><span>Phone:</span> <a href="tel://1234567920">+0909367212</a></p>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex">
+                    <div class="dbox">
+                        <p><span>Email:</span> <a href="mailto:info@yoursite.com">venusrestaurant@gmail.com</a></p>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex">
+                    <div class="dbox">
+                        <p><span>Website</span> <a href="#">venusrestaurant.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Venus Restaurant</h2>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Remainder of your footer content -->
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">VinhDiesel</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen">
+        <svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        </svg>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.easing.1.3.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/jquery.stellar.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/aos.js"></script>
+    <script src="assets/js/jquery.animateNumber.min.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+    <script src="assets/js/jquery.timepicker.min.js"></script>
+    <script src="assets/js/scrollax.min.js"></script>
+    <!-- Move the Google Maps API script above your custom script -->
+
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'alert';
+            notification.textContent = message;
+
+            if (type === 'success') {
+                notification.classList.add('alert-success');
+            } else if (type === 'error') {
+                notification.classList.add('alert-danger');
+            }
+
+            document.body.appendChild(notification);
+
+            // Xóa thông báo sau 5 giây
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 5000);
+        }
+
+        // Hàm kiểm tra định dạng email
+        function validateEmail(email) {
+            const re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        // Hàm kiểm tra số điện thoại
+        function validatePhone(phone) {
+            const re = /^[0-9]{10}$/;
+            return re.test(phone);
+        }
+
+        // Hàm xử lý sự kiện gửi biểu mẫu
+        function onSubmit() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+
+            if (!fullName || !email || !phone || !message) {
+                alert('Please fill in all fields');
+                return false;
+            }
+
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address');
+                return false;
+            }
+
+            if (!validatePhone(phone)) {
+                alert('Phone number must be exactly 10 digits');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

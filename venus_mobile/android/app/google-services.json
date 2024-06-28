@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "544500040449",
+    "project_id": "venus-signin",
+    "storage_bucket": "venus-signin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544500040449:android:b9fd0a63b8879f37f51100",
+        "android_client_info": {
+          "package_name": "com.example.thebags_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXIntt8Sf9qztXzADd3qwEuww1vjmOpPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

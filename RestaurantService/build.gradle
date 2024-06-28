@@ -1,0 +1,65 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id "com.diffplug.eclipse.apt" version "3.26.0"
+}
+
+group = 'com.restaurant'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+ext {
+    mapstructVersion = "1.5.5.Final"
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	//Masptruct
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    testImplementation "org.testng:testng:6.10", "org.easytesting:fest-assert:1.4"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+	//Lombok
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding
+	implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.2.0'
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+	testCompileOnly 'org.projectlombok:lombok:1.18.30'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+	//
+	implementation 'com.sun.mail:javax.mail:1.6.2'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+	//
+	
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	//
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs = [
+            '-Amapstruct.suppressGeneratorTimestamp=true'
+    ]
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

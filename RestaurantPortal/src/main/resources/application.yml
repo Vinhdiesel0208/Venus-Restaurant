@@ -1,0 +1,36 @@
+server:
+  port: 8082
+app:
+  jwtSecret: asdfghjklpoiuytrewqzxcvbnmqazwsxedcrfvtgbyh
+  jwtExpirationMs: 86400000
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    password: 
+    url: jdbc:mysql://localhost:3306/venus
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    password: xhjrdqdmqdokbdgd
+
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: advenus2205@gmail.com
+paypal:
+  mode: sandbox
+  client:
+    app: AWaDcggq4KGALzjm9IZzE-7kBccuEVGBgdRnH_UJB19P5mTwzne77Rs-c40xjjFdBo8pNDq5Z_RaQThP 
+    secret: EJsJSziQmYd6jJXvY8W6Ca_QUQAbR7nCXReKLl9_u8kZp2aJ-LCOqfZochCtqu_RVTwObwDPIypJ_qE-
+vnpay:
+  terminalId: RUPA4Z50
+  hashSecret: D3A3WRJJ2HDV3ZEICH9L60VTSQZ1RZLB
+  paymentUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html

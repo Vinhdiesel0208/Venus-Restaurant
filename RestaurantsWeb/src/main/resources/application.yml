@@ -1,0 +1,51 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/venus
+    username: root
+    password: 
+  security:
+    oauth2: 
+      client:
+        registration:
+          github:
+            clientId: github-client-id
+            clientSecret: github-client-secret
+          facebook:
+            client-id: changeid
+            client-secret: changesecret
+            scope:
+            - email
+            - public_profile
+          google:
+            client-id: changeid
+            client-secret: changesecret
+            scope:
+            - email
+            - profile
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: advenus2205@gmail.com
+    password: xhjrdqdmqdokbdgd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+paypal:
+  mode: sandbox
+  client:
+    app: AWaDcggq4KGALzjm9IZzE-7kBccuEVGBgdRnH_UJB19P5mTwzne77Rs-c40xjjFdBo8pNDq5Z_RaQThP 
+    secret: EJsJSziQmYd6jJXvY8W6Ca_QUQAbR7nCXReKLl9_u8kZp2aJ-LCOqfZochCtqu_RVTwObwDPIypJ_qE-
+vnpay:
+  terminalId: RUPA4Z50
+  hashSecret: D3A3WRJJ2HDV3ZEICH9L60VTSQZ1RZLB
+  paymentUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html

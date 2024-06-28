@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "544500040449",
+    "project_id": "venus-signin",
+    "storage_bucket": "venus-signin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544500040449:android:b9fd0a63b8879f37f51100",
+        "android_client_info": {
+          "package_name": "com.example.thebags_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544500040449-2k4a39o9i1k9p62opuglgqaol4l3kn74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.thebags_mobile",
+            "certificate_hash": "00397523002a6d0c31625b719aa5f0b63a4fbb94"
+          }
+        },
+        {
+          "client_id": "544500040449-b1qttno0kfia2aueuqtijbdcqoqkbkcc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXIntt8Sf9qztXzADd3qwEuww1vjmOpPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "544500040449-b1qttno0kfia2aueuqtijbdcqoqkbkcc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #333;
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        .footer {
+            padding: 15px;
+            background-color: #333;
+            color: #ffffff;
+            text-align: center;
+            font-size: 12px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .order-summary {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .order-summary th, .order-summary td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .order-summary th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .total, .discount, .grand-total, .tips, .tax {
+            text-align: right;
+            font-weight: bold;
+        }
+        .highlight {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Order Invoice</h2>
+        </div>
+        <div class="content">
+            <p>Hello,</p>
+            <p>Your current reward points: <span class="highlight" th:text="${points}"></span></p>
+            <p>Your Order Invoice:</p>
+            <table class="order-summary">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="orderItem : ${orderItems}">
+                        <td th:text="${orderItem.ingredient.ingredientName}"></td>
+                        <td th:text="${orderItem.quantity}"></td>
+                        <td th:text="${orderItem.price}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="total">Total: <strong th:text="${orderTotal}"></strong></p>
+            <p class="discount">Discount: <strong th:text="${orderDiscount}"></strong></p>
+            <p class="tips">Tips: <strong th:text="${tips}"></strong></p>
+            <p class="tax">Tax: <strong th:text="${tax}"></strong></p>
+            <p class="grand-total">Grand Total: <strong th:text="${total1}"></strong></p>
+            <p>Thank you for your purchase!</p>
+        </div>
+        <div class="footer">
+            &copy; <span th:text="${#dates.year(new java.util.Date())}">2024</span> Venus Restaurant. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

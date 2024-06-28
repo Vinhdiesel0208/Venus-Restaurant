@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+
+<head
+	th:replace="fragments/partial :: page_head('The Bags Shop', 'none')" />
+<style type="text/css">
+.col-25 {
+	-ms-flex: 25%; /* IE10 */
+	flex: 25%;
+}
+
+.col-50 {
+	-ms-flex: 50%; /* IE10 */
+	flex: 50%;
+}
+
+.col-75 {
+	-ms-flex: 75%; /* IE10 */
+	flex: 75%;
+}
+
+.col-25, .col-50, .col-75 {
+	padding: 0 16px;
+}
+
+@media ( max-width : 768px) {
+	.col-12 {
+		width: 100%;
+	}
+}
+
+#page {
+	background-color: #f2f2f2;
+	padding: 5px 20px 15px 20px;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+}
+
+input[type=text] {
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+input[type=email] {
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+label {
+	margin-bottom: 10px;
+	display: block;
+}
+
+.icon-container {
+	margin-bottom: 20px;
+	padding: 7px 0;
+	font-size: 24px;
+}
+
+#payment {
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.btn {
+	background-color: #04AA6D;
+	color: white;
+	padding: 12px;
+	margin: 10px 0;
+	border: none;
+	width: 100%;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.btn:hover {
+	background-color: #45a049;
+}
+
+a {
+	color: #2196F3;
+}
+
+hr {
+	border: 1px solid lightgrey;
+}
+
+span.price {
+	float: right;
+	color: grey;
+}
+
+#customer-info {
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+#customer-info h3 {
+	font-size: 1.5rem;
+	margin-bottom: 15px;
+}
+
+#customer-info p {
+	margin-bottom: 10px;
+}
+
+#customer-info button {
+	padding: 8px 16px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#customer-info button:hover {
+	background-color: #0056b3;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+</style>
+<style>
+@media ( max-width : 768px) {
+	.col-md-7 {
+		width: 50%;
+		margin-bottom: 10px;
+	}
+}
+</style>
+
+<style>
+.radio-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.radio-button {
+	display: inline-block;
+	width: 130px; /* Điều chỉnh kích thước nút radio */
+	height: 130px; /* Điều chỉnh kích thước nút radio */
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	cursor: pointer;
+	margin-right: 10px;
+	border: 2px solid transparent; /* Đảm bảo nút không có viền ban đầu */
+}
+/* Ẩn nút radio */
+
+/* Định dạng nút radio được chọn */
+input[type="radio"]:checked+.radio-button {
+	border-color: red; /* Màu viền khi nút được chọn */
+}
+
+/* Hiệu ứng khi rê chuột vào nút */
+.radio-button:hover {
+	border-color: red; /* Màu viền khi rê chuột vào nút */
+}
+
+@media ( max-width : 768px) {
+	.radio-button {
+		width: 100px;
+		/* Điều chỉnh kích thước nút radio khi màn hình nhỏ hơn 768px */
+		height: 100px;
+		/* Điều chỉnh kích thước nút radio khi màn hình nhỏ hơn 768px */
+	}
+}
+
+.payment-options {
+	justify-content: space-around; /* Căn giữa các nút thanh toán */
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px; /* Khoảng cách giữa các nút */
+}
+
+/* CSS cho các nút tip */
+.tip-radio-button {
+	display: inline-block;
+	width: 170px; /* Giữ nguyên kích thước nút tip */
+	height: 170px; /* Giữ nguyên kích thước nút tip */
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	cursor: pointer;
+	margin-right: 10px;
+	border: 2px solid transparent; /* Đảm bảo nút không có viền ban đầu */
+}
+/* Định dạng nút radio được chọn */
+input[type="radio"]:checked+.tip-radio-button {
+	border-color: gray; /* Màu viền khi nút được chọn */
+}
+
+/* Hiệu ứng khi rê chuột vào nút */
+.tip-radio-button:hover {
+	border-color: gray; /* Màu viền khi rê chuột vào nút */
+}
+</style>
+
+<body class="stretched">
+
+	<div id="wrapper">
+
+		<div th:replace="fragments/header :: header">&nbsp;</div>
+
+		<section class="hero-wrap hero-wrap-2"
+			style="background-image: url('/assets/images/bg_3.jpg');"
+			data-stellar-background-ratio="0.5">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate text-center mb-4">
+						<h1 class="mb-2 bread">Check Out</h1>
+						<p class="breadcrumbs">
+							<span class="mr-2"><a href="index.html">Home <i
+									class="ion-ios-arrow-forward"></i></a></span> <span>Checkout<i
+								class="ion-ios-arrow-forward"></i></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div id="payment">
+			<section class="ftco-section">
+				<form id="checkout-form" th:action="@{/process}" method="post">
+					<div class="row">
+
+						<div class="col-12  col-lg-8">
+							<div class="container" id="page">
+								<div class="row">
+									<!-- Customer Info -->
+									<div class="col-md-6">
+										<h3>Customer Info</h3>
+										<label for="fname"><i class="fa fa-user"></i> Full
+											Name</label> <input type="text" id="fname" name="fullname"
+											placeholder="John M. Doe"> <label for="email"><i
+											class="fa fa-envelope"></i> Email</label> <input type="email"
+											id="email" name="email" placeholder="john@example.com"
+											required>
+
+
+										<!-- Search Customer Form -->
+
+									</div>
+
+									<div class="col-md-5 mt-md-0 mt-3">
+										<h3>Payment</h3>
+										<div class="d-flex">
+											<!-- VnPay radio button -->
+											<div onclick="setPaymentMethod('paypal')">
+												<input type="radio" required id="pay-pal" name="pay-method"
+													value="paypal" style="display: none;"> <label
+													for="pay-pal" class="radio-button"
+													style="background-image: url('/assets/images/PayPal-.jpg')"></label>
+											</div>
+											<div onclick="setPaymentMethod('vnpay')">
+												<input type="radio" required id="vn-pay" name="pay-method"
+													value="vnpay" style="display: none;"> <label
+													for="vn-pay" class="radio-button"
+													style="background-image: url('/assets/images/vnpay.png')"></label>
+											</div>
+											<!-- Cash radio button -->
+											<div onclick="setPaymentMethod('cash')">
+												<input type="radio" id="cash" required name="pay-method"
+													value="cash" style="display: none;"> <label
+													for="cash" class="radio-button"
+													style="background-image: url('/assets/images/cash.png');"></label>
+											</div>
+										</div>
+										<!-- Tips -->
+									</div>
+
+									<div class="radio-container mt-3">
+										<div class="row">
+											<div class="col-md-6 col-lg-3 mb-3">
+												<input type="radio" id="tip5" name="tip-amount" value="5"
+													style="display: none;" required> <label for="tip5"
+													class="tip-radio-button bg-image"
+													style="background-image: url('/assets/images/5usd.jpg');"></label>
+											</div>
+											<div class="col-md-6 col-lg-3 mb-3">
+												<input type="radio" id="tip10" name="tip-amount" value="10"
+													style="display: none;" required> <label for="tip10"
+													class="tip-radio-button bg-image"
+													style="background-image: url('/assets/images/10usd.jpg');"></label>
+											</div>
+											<div class="col-md-6 col-lg-3 mb-3">
+												<input type="radio" id="tip20" name="tip-amount" value="20"
+													style="display: none;" required> <label for="tip20"
+													class="tip-radio-button bg-image"
+													style="background-image: url('/assets/images/20usd.jpg');"></label>
+											</div>
+											<div class="col-md-6 col-lg-3 mb-3">
+												<input type="radio" id="tip50" name="tip-amount" value="50"
+													style="display: none;" required> <label for="tip50"
+													class="tip-radio-button bg-image"
+													style="background-image: url('/assets/images/50usd.jpg');"></label>
+											</div>
+											<div class="col-md-6 col-lg-3 mb-3">
+												<input type="radio" id="tip0" name="tip-amount" value="0"
+													style="display: none;" required> <label for="tip0"
+													class="tip-radio-button bg-image"
+													style="background-image: url('/assets/images/0usd.jpeg');"></label>
+											</div>
+										</div>
+									</div>
+
+
+
+
+								</div>
+							</div>
+						</div>
+
+						<!-- Order Summary -->
+						<div class="col-12 col-lg-4">
+
+							<table class="table" id="order-table">
+								<thead>
+									<tr>
+										<th scope="col">Dishes</th>
+										<th scope="col">Quantity</th>
+										<th scope="col">Price</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- Loop through order items -->
+									<th:block th:each="order : ${orderHistory}">
+										<tr>
+											<td><span th:text="${order.ingredient.ingredientName}">Ingredient
+													Name</span><br /> <span th:if="${order.halfPortion}">(Half
+													Portion)</span></td>
+											<td><span th:if="${order.halfPortion}"
+												th:text="${order.quantity * 2}"></span> <span
+												th:unless="${order.halfPortion}" th:text="${order.quantity}"></span>
+											</td>
+											<td><span th:if="${order.halfPortion}"
+												th:text="'$' + ${order.price.multiply(order.quantity.multiply(2))}"></span>
+												<span th:unless="${order.halfPortion}"
+												th:text="'$' + ${order.price.multiply(order.quantity)}"></span>
+											</td>
+											<td><input type="hidden" name="halfPortion"
+												th:value="${order.halfPortion}" /></td>
+
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+
+							<hr>
+							<div class="total-amount-container">
+								Total: <span id="totalAmount" class="price text-success"
+									th:text="'$' + ${total1}"></span>
+							</div>
+							<div class="tax-container">
+								Tax (10%): <span id="taxAmount" class="price text-success"
+									th:text="'$' + ${total1 * 0.1}"></span>
+							</div>
+							<div class="tips-container" id="tipAmountInfo"
+								style="display: none;">
+								Tip Amount: <span id="tipAmountDisplay"
+									class="price text-success"></span>
+							</div>
+							<div>
+								<input type="hidden" id="discountInput" name="discount"
+									value="0"> <input type="hidden" id="totalAmountInput"
+									name="total1" th:value="${total1}" /> <input type="hidden"
+									id="tax" name="tax" th:value="${total1 * 0.1}" />
+
+							</div>
+							<div class="dis-container" id="discount-info"
+								style="display: none;">
+								Discount Amount: <span id="discountAmount"
+									class="price text-danger"></span>
+							</div>
+
+							<div class="grand-total-container">
+								Grand Total: <span id="grandTotalAmount"
+									class="price text-success"
+									th:text="'$' + ${total1 + total1 * 0.1}"></span>
+							</div>
+
+							<input type="hidden" id="subtotalValue" name="total"
+								value="${total1 + total1 * 0.1}">
+
+
+
+							<th:block th:each="order : ${orderHistory}">
+								<tr>
+									<td><input type="hidden" name="ingredientId"
+										th:value="${order.ingredient.id}" readonly></td>
+
+									<td><input type="hidden" name="quantity"
+										th:value="${order.quantity}" /></td>
+									<td><input type="hidden" name="price"
+										th:value="${order.price}" /></td>
+									<!-- You can add additional input fields here if needed -->
+								</tr>
+							</th:block>
+							<input type="hidden" id="tableId" name="tableId"
+								th:value="${tableId}">
+
+							<!-- Continue to checkout button -->
+							<input type="submit" value="Continue to checkout" class="btn">
+						</div>
+					</div>
+				</form>
+
+				<div id="search-customer-form" class="mt-3">
+					<form id="search-form" onsubmit="searchCustomer(event)"
+						class="form-inline">
+						<div class="input-group">
+							<input type="text" id="search-email" name="email"
+								class="form-control" placeholder="Search Customer by Email"
+								required>
+							<div class="input-group-append">
+								<button type="submit">Search</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div id="customer-info" style="display: none;">
+					<h3>Customer Info</h3>
+					<p>
+						Name: <span id="customer-name"></span>
+					</p>
+					<p>
+						Email: <span id="customer-email"></span>
+					</p>
+					<p>
+						Points Earned: <span id="customer-points"></span>
+					</p>
+					<button onclick="redeemPoints()">Redeem Points</button>
+				</div>
+
+
+			</section>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+		<script>
+
+document.getElementById('checkout-form').addEventListener('submit', function(event) {
+    // Kiểm tra xem người dùng đã chọn phương thức thanh toán chưa
+    var paymentMethod = document.querySelector('input[name="pay-method"]:checked');
+    if (!paymentMethod) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Payment Method Not Selected',
+            text: 'Please select a payment method before proceeding to checkout.',
+        });
+        return false;
+    }
+
+    // Kiểm tra xem người dùng đã chọn giá trị tip hay chưa
+    var tipAmount = document.querySelector('input[name="tip-amount"]:checked');
+    if (!tipAmount) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Tip Amount Not Selected',
+            text: 'Please select a tip amount before proceeding to checkout.',
+        });
+        return false;
+    }
+
+    // Kiểm tra xem người dùng đã nhập email hay chưa
+    var email = document.getElementById('email').value.trim();
+    if (email === '') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Email Required',
+            text: 'Please enter your email before proceeding to checkout.',
+        });
+        return false;
+    }
+
+    // Kiểm tra xem email nhập vào có hợp lệ hay không (đã validate email format)
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email address before proceeding to checkout.',
+        });
+        return false;
+    }
+
+    // Thêm các kiểm tra khác nếu cần
+
+    // Nếu không có lỗi, tiếp tục gửi form đi
+});
+
+</script>
+
+
+
+		<script>
+		
+	
+	
+		
+		document.getElementById("search-email").addEventListener("input", function() {
+		    var searchEmailValue = this.value;
+		    document.getElementById("email").value = searchEmailValue;
+		});
+
+    async function searchCustomer(event) {
+        event.preventDefault(); // Prevent form submission
+
+        const email = document.getElementById('search-email').value;
+
+        // Make an AJAX request to search for the customer
+        try {
+            const response = await fetch(`/search-customer?email=${email}`);
+            if (response.ok) {
+                const customer = await response.json();
+                if (customer) {
+                    displayCustomerInfo(customer);
+                } else {
+                    showCustomerNotFoundError();
+                }
+            } else {
+                throw new Error('Failed to fetch customer information');
+            }
+        } catch (error) {
+            console.error(error);
+            showCustomerNotFoundError();
+        }
+    }
+
+    function displayCustomerInfo(customer) {
+        document.getElementById('customer-name').innerText = customer.name;
+        document.getElementById('customer-email').innerText = customer.email;
+        document.getElementById('customer-points').innerText = customer.points;
+        document.getElementById('customer-info').style.display = 'block';
+    }
+    
+    function showCustomerInfo(customer) {
+        Swal.fire({
+            title: "Customer Info",
+            html: `
+                <h3>Customer Info</h3>
+                <p>Name: ${customer.name}</p>
+                <p>Email: ${customer.email}</p>
+                <p>Points Earned: ${customer.points}</p>
+            `,
+            confirmButtonText: "OK"
+        });
+    }
+
+    function showCustomerNotFoundError() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Customer Not Found',
+            text: 'No customer found with the provided email.',
+        });
+    }
+
+    function redeemPoints() {
+        // Your redeem points logic here
+    }
+</script>
+
+		<script type="text/javascript">
+			contextPath = "[[@{/}]]";
+			var csrfHeaderName = "[[${_csrf.headerName}]]";
+			var csrfValue = "[[${_csrf.token}]]";
+		</script>
+		<script>
+			function setPaymentMethod(name) {
+				document.getElementById('payment-method').value = name;
+			}
+
+			document
+					.getElementById('search-form')
+					.addEventListener(
+							'submit',
+							function(event) {
+								event.preventDefault();
+								var email = document
+										.getElementById('search-email').value;
+								var xhr = new XMLHttpRequest();
+								xhr.open('GET', '/search-customer?email='
+										+ email, true);
+								xhr.onreadystatechange = function() {
+									if (xhr.readyState == XMLHttpRequest.DONE) {
+										if (xhr.status == 200) {
+											var customer = JSON
+													.parse(xhr.responseText);
+
+											document
+													.getElementById('customer-name').innerText = customer.fullName;
+											document
+													.getElementById('customer-email').innerText = customer.email;
+											document
+													.getElementById('customer-points').innerText = customer.points;
+											document
+													.getElementById('customer-info').style.display = 'block';
+											
+										} else {
+
+										}
+									}
+								};
+								xhr.send();
+							});
+			var pointsRedeemed = false;
+
+			function redeemPoints() {
+			    if (!pointsRedeemed) {
+			        pointsRedeemed = true;
+
+			        var points = parseFloat(document.getElementById('customer-points').innerText);
+			        var grandTotalElement = document.getElementById('grandTotalAmount');
+			        var grandTotal = parseFloat(grandTotalElement.innerText.replace('$', ''));
+			        var tipRadios = document.querySelectorAll('input[name="tip-amount"]:checked');
+			        var tipAmount = 0;
+
+			        if (tipRadios.length > 0) {
+			            tipAmount = parseFloat(tipRadios[0].value);
+			        }
+
+			        var discountRate = points / 10;
+			        var discountAmount = discountRate;
+			        var newGrandTotal = grandTotal - discountAmount;
+
+			        if (newGrandTotal < 0) {
+			            newGrandTotal = 0;
+			        }
+
+			        grandTotalElement.innerText = '$' + newGrandTotal.toFixed(2);
+
+			        var discountInfo = document.getElementById('discount-info');
+			        var discountAmountElement = document.getElementById('discountAmount');
+			        discountAmountElement.innerText = '$' + discountAmount.toFixed(2);
+			        discountInfo.style.display = 'block';
+
+			        var discountInput = document.getElementById('discountInput');
+			        discountInput.value = discountAmount.toFixed(2);
+			        subtotalInput.value = newGrandTotal.toFixed(2);
+
+			      
+			        Swal.fire({
+			            icon: 'success',
+			            title: 'Points Redeemed',
+			            text: 'Points redeemed successfully!',
+			            confirmButtonText: 'OK'
+			        });
+			    }
+			}
+
+
+		</script>
+
+		<script>
+			var tipRadios = document
+					.querySelectorAll('input[name="tip-amount"]');
+			var grandTotalElement = document.getElementById('grandTotalAmount');
+			var subtotalInput = document.getElementById('subtotalValue');
+			var currentTipAmount = 0;
+
+			tipRadios
+					.forEach(function(radio) {
+						radio
+								.addEventListener(
+										'change',
+										function() {
+											if (this.checked) {
+												var newTipAmount = parseFloat(this.value);
+												var tipAmountDisplay = document
+														.getElementById('tipAmountDisplay');
+												var grandTotal = parseFloat(grandTotalElement.innerText
+														.replace('$', ''));
+												var taxAmount = parseFloat(document
+														.getElementById('taxAmount').innerText
+														.replace('$', ''));
+
+												var tipAmountInfo = document
+														.getElementById('tipAmountInfo');
+
+												grandTotal -= currentTipAmount;
+
+												var tipAmountFormatted = '$'
+														+ newTipAmount
+																.toFixed(2);
+												tipAmountDisplay.innerText = tipAmountFormatted;
+												tipAmountInfo.style.display = 'block';
+
+												grandTotal += newTipAmount;
+												grandTotalElement.innerText = '$'
+														+ grandTotal.toFixed(2);
+												currentTipAmount = newTipAmount;
+
+												subtotalInput.value = grandTotal
+														.toFixed(2);
+											} else {
+												this.checked = false;
+												document
+														.getElementById('tipAmountInfo').style.display = 'none';
+											}
+										});
+					});
+			document
+					.getElementById('checkout-form')
+					.addEventListener(
+							'submit',
+							function(event) {
+								var email1 = document.getElementById('email').value;
+								var email2 = document
+										.getElementById('search-email').value;
+
+								if (email2 !== "" && email1 !== email2) {
+									event.preventDefault();
+									alert('Email addresses must match! Please make sure both email addresses are the same.');
+									return false;
+								}
+							});
+		</script>
+
+
+
+		<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+	</div>
+
+	<div id="gotoTop" class="bi-arrow-up"></div>
+
+	<div th:replace="fragments/partial :: page_script"></div>
+
+</body>
+
+</html>
+
